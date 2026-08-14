@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Professor Allan Kardec · 20020 · Deputado Estadual | Mato Grosso</title>
+<meta name="description" content="Professor Allan Kardec — candidato a Deputado Estadual por Mato Grosso pelo Podemos (20020). Uma campanha que escuta: educação, ciência, tecnologia e oportunidades.">
+<meta property="og:title" content="Professor Allan Kardec · 20020 · Deputado Estadual">
+<meta property="og:description" content="A velha campanha só fala. A nossa também escuta. Mato Grosso · Eleições 2026.">
+<meta property="og:type" content="website">
+<!-- FAVICON: substituir pelo arquivo oficial quando disponível -->
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* ==========================================================
+     PROFESSOR ALLAN KARDEC · 20020 — Caderno de Escuta de Mato Grosso
+     Paleta oficial (Manual de Identidade Visual v1.0 · ago/2026):
+     somente Azul #070FB5 · Verde #51BC24 · Amarelo #F9C023 · Branco.
+     Sem tons intermediários, gradientes, sombras ou transparências.
+     Poppins 800 títulos · 600 rótulos/nav · 400 textos. Raio máx. 2px.
+     ========================================================== */
+  :root{
+    --azul:    #070FB5;
+    --verde:   #51BC24;
+    --amarelo: #F9C023;
+    --branco:  #FFFFFF;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion:reduce){ html{ scroll-behavior:auto; } }
+  body{
+    font-family:'Poppins', sans-serif;
+    font-weight:400;
+    font-size:16px;
+    line-height:1.65;
+    color:var(--azul);
+    background:var(--branco);
+    overflow-x:clip;
+  }
+  img{ max-width:100%; display:block; }
+  a{ color:inherit; text-decoration:none; }
+  ul{ list-style:none; }
+  figure{ margin:0; }
+  a:focus-visible, button:focus-visible, input:focus-visible{
+    outline:3px solid var(--amarelo); outline-offset:2px;
+  }
+
+  .wrap{ width:min(1280px, 92vw); margin:0 auto; }
+  .mono{
+    font-family:ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing:.06em;
+  }
+
+  /* Seções: alternância azul/branco, divisórias 1px na cor do texto */
+  .sec{ padding:clamp(72px, 9vw, 128px) 0; }
+  .sec-azul{ background:var(--azul); color:var(--branco); }
+  .sec-branca{ background:var(--branco); color:var(--azul); }
+  section[id], footer[id]{ scroll-margin-top:88px; }
+
+  .kicker{
+    margin:0; font-size:14px; font-weight:600;
+    letter-spacing:.26em; text-transform:uppercase; color:var(--verde);
+  }
+  .balance{ text-wrap:balance; }
+
+  /* Botões (altura 50px, raio 2px, hover = só mudança de cor) */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    min-height:50px; padding:0 28px;
+    font-family:inherit; font-weight:600; font-size:15px;
+    border-radius:2px; border:0; cursor:pointer;
+  }
+  .btn-branco{ background:var(--branco); color:var(--azul); }
+  .btn-branco:hover{ background:var(--verde); color:var(--branco); }
+  .btn-borda-branca{ border:1px solid var(--branco); color:var(--branco); background:none; }
+  .btn-borda-branca:hover{ border-color:var(--verde); color:var(--verde); }
+  .btn-azul{ background:var(--azul); color:var(--branco); border:1px solid var(--azul); }
+  .btn-azul:hover{ background:var(--verde); border-color:var(--verde); }
+  .cta-voto{
+    display:inline-flex; align-items:center; justify-content:center;
+    background:var(--amarelo); color:var(--azul);
+    font-weight:800; letter-spacing:.08em;
+    border-radius:2px;
+  }
+  .cta-voto:hover{ background:var(--branco); }
+
+  /* Slots de imagem pendente: listras diagonais finas azul/branco */
+  .slot{
+    position:relative;
+    background:repeating-linear-gradient(45deg, var(--branco) 0 14px, var(--azul) 14px 15px);
+    border:1px solid var(--azul);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .slot-label{
+    font-size:11px; color:var(--azul); background:var(--branco); padding:6px 10px;
+  }
+  .slot > img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  }
+  .legenda{
+    font-size:13px; letter-spacing:.14em; text-transform:uppercase;
+    padding-top:10px;
+  }
+
+  /* ---------- Cabeçalho ---------- */
+  header{
+    position:sticky; top:0; z-index:60;
+    background:var(--azul);
+    border-bottom:1px solid var(--branco);
+  }
+  .nav-bar{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:24px; min-height:72px;
+  }
+  .logo-link{ display:flex; align-items:center; flex-shrink:0; }
+  .logo-link img{ height:54px; width:auto; display:block; }
+  .nav-links{ display:flex; align-items:center; flex-wrap:wrap; gap:28px; }
+  .nav-links a{ color:var(--branco); font-size:13px; font-weight:600; white-space:nowrap; }
+  .nav-links a:hover{ color:var(--verde); }
+  .nav-links .cta-voto{ font-size:14px; padding:11px 20px; }
+  .nav-links .cta-voto:hover{ color:var(--azul); }
+  #btn-menu{
+    display:none; flex-direction:column; align-items:center; justify-content:center; gap:5px;
+    width:48px; height:48px;
+    background:var(--azul); border:1px solid var(--branco); border-radius:2px;
+    cursor:pointer;
+  }
+  #btn-menu span{ display:block; width:20px; height:2px; background:var(--branco); }
+  #nav-mobile{
+    display:none;
+    background:var(--azul); border-top:1px solid var(--branco);
+    flex-direction:column; padding:8px 4vw 20px;
+  }
+  #nav-mobile.open{ display:flex; }
+  #nav-mobile a{
+    color:var(--branco); font-size:16px; font-weight:600;
+    padding:13px 0; border-bottom:1px solid var(--branco);
+  }
+  #nav-mobile a:hover{ color:var(--verde); }
+  #nav-mobile .cta-voto{
+    color:var(--azul); padding:14px 0; text-align:center;
+    border-bottom:0; margin-top:16px;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{ background:var(--azul); color:var(--branco); }
+  .hero-grid{
+    display:grid; grid-template-columns:minmax(0,7fr) minmax(320px,5fr);
+    gap:64px;
+    padding:clamp(56px, 8vw, 104px) 0 0 max(4vw, calc((100vw - 1280px) / 2));
+  }
+  .hero-txt{ padding-bottom:clamp(56px, 8vw, 104px); }
+  .hero-kicker{
+    margin:0; font-size:14px; font-weight:600;
+    letter-spacing:.28em; text-transform:uppercase; color:var(--verde);
+  }
+  .hero h1{
+    margin:22px 0 0;
+    font-size:clamp(34px, 4.8vw, 66px);
+    line-height:1.05; letter-spacing:-.02em; font-weight:800;
+    color:var(--branco); max-width:13ch;
+  }
+  .hero-lead{ margin:26px 0 0; max-width:52ch; font-size:17px; color:var(--branco); }
+  .hero-ctas{ display:flex; flex-wrap:wrap; gap:14px; margin-top:36px; }
+  .hero-num{
+    display:flex; align-items:center; gap:22px; flex-wrap:wrap;
+    margin-top:52px; border-top:1px solid var(--branco); padding-top:26px;
+  }
+  .hero-num strong{
+    font-size:clamp(52px, 6vw, 76px); font-weight:800;
+    line-height:1; letter-spacing:.01em; color:var(--amarelo);
+  }
+  .hero-num-rotulo{
+    display:flex; flex-direction:column; gap:2px;
+    font-size:14px; font-weight:600; letter-spacing:.22em;
+    text-transform:uppercase; color:var(--branco);
+  }
+  .hero-num-rotulo .verde{ color:var(--verde); }
+  .hero-figura{ display:flex; flex-direction:column; }
+  #hero-foto{
+    position:relative; flex:1; min-height:560px;
+    background:var(--azul); border-left:1px solid var(--branco);
+  }
+  #hero-foto .slot-hero{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-size:11px; color:var(--branco); padding:20px; text-align:center;
+  }
+  #hero-foto img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  }
+  .hero-figura figcaption{
+    font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--branco);
+    padding:14px 4vw 28px 0; border-top:1px solid var(--branco); text-align:right;
+  }
+
+  /* ---------- 01 · Escuta ---------- */
+  .escuta-head{
+    display:grid; grid-template-columns:6fr 5fr;
+    gap:clamp(32px, 5vw, 88px); align-items:start;
+  }
+  .escuta-head h2{
+    margin:20px 0 0; font-size:clamp(32px, 3.9vw, 54px);
+    line-height:1.1; letter-spacing:-.02em; font-weight:800;
+  }
+  .escuta-head p{ margin:0; font-size:17px; max-width:46ch; padding-top:clamp(0px, 3vw, 44px); }
+  .fluxo{ margin-top:clamp(48px, 6vw, 80px); }
+  .fluxo-row{
+    display:grid; grid-template-columns:88px 260px 1fr;
+    gap:12px 28px; align-items:baseline;
+    border-top:1px solid var(--azul); padding:22px 0;
+  }
+  .fluxo-row:last-child{ border-bottom:1px solid var(--azul); }
+  .fluxo-row .num{ font-size:16px; font-weight:700; color:var(--verde); }
+  .fluxo-row .palavra{
+    font-size:clamp(24px, 2.6vw, 34px); font-weight:800;
+    letter-spacing:-.01em; line-height:1.1;
+  }
+  .fluxo-row .desc{ font-size:15px; }
+
+  /* ---------- 02 · Mato Grosso em pauta ---------- */
+  .pauta h2{
+    margin:20px 0 0; font-size:clamp(32px, 4.2vw, 58px);
+    line-height:1.08; letter-spacing:-.02em; font-weight:800;
+    color:var(--branco); max-width:18ch;
+  }
+  .pauta-grid{
+    display:grid; grid-template-columns:7fr 4fr;
+    gap:clamp(40px, 6vw, 96px); margin-top:clamp(44px, 5vw, 72px); align-items:start;
+  }
+  .tema-row{
+    display:grid; grid-template-columns:56px 1fr;
+    gap:0 20px; align-items:baseline;
+    border-top:1px solid var(--branco); padding:16px 0;
+  }
+  .tema-row:last-child{ border-bottom:1px solid var(--branco); }
+  .tema-row .indice{ font-size:15px; font-weight:700; color:var(--verde); }
+  .tema-row .tema{ font-size:clamp(19px, 1.9vw, 24px); font-weight:700; }
+  .pauta-apoio p{ margin:0; font-size:16px; color:var(--branco); max-width:38ch; }
+  .pauta-apoio .btn{ margin-top:28px; }
+  .nota-pendencia{
+    margin:22px 0 0; font-size:15px; letter-spacing:.04em;
+    color:var(--verde); font-weight:600; max-width:40ch;
+  }
+
+  /* ---------- 03 · Bandeiras ---------- */
+  .bandeiras-head{
+    display:grid; grid-template-columns:6fr 5fr;
+    gap:clamp(24px, 4vw, 88px); align-items:end;
+    margin-bottom:clamp(44px, 5vw, 72px);
+  }
+  .bandeiras-head h2{
+    margin:20px 0 0; font-size:clamp(30px, 3.6vw, 48px);
+    line-height:1.1; letter-spacing:-.02em; font-weight:800;
+  }
+  .bandeiras-head p{ margin:0; font-size:16px; max-width:44ch; }
+  .bandeira{
+    display:grid; gap:24px clamp(24px, 4vw, 64px);
+    border-top:1px solid var(--azul);
+    padding:clamp(32px, 4vw, 52px) 0; align-items:start;
+  }
+  .bandeira.fig-dir{ grid-template-columns:64px 1fr minmax(280px, 420px); }
+  .bandeira.fig-esq{ grid-template-columns:64px minmax(280px, 420px) 1fr; }
+  .bandeira:last-child{ border-bottom:1px solid var(--azul); }
+  .bandeira .num{ font-size:17px; font-weight:700; color:var(--verde); }
+  .bandeira h3{
+    margin:0; font-size:clamp(24px, 2.4vw, 32px);
+    font-weight:800; letter-spacing:-.01em; line-height:1.15;
+  }
+  .bandeira .txt p{ margin:16px 0 0; font-size:16px; max-width:52ch; }
+  .bandeira .txt .evidencia{ font-size:16px; font-weight:600; color:var(--verde); }
+  .bandeira .slot{ aspect-ratio:4/3; }
+
+  /* ---------- 04 · Trajetória ---------- */
+  .trajetoria h2{
+    margin:20px 0 0; font-size:clamp(32px, 4vw, 54px);
+    line-height:1.08; letter-spacing:-.02em; font-weight:800;
+    color:var(--branco); max-width:20ch;
+  }
+  .trajetoria-nome{
+    margin:18px 0 0; font-size:15px; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--branco);
+  }
+  .arquivo{ margin-top:clamp(44px, 5vw, 72px); }
+  .arquivo-row{
+    display:grid; grid-template-columns:170px 280px 1fr;
+    gap:8px clamp(24px, 4vw, 56px);
+    border-top:1px solid var(--branco); padding:26px 0;
+  }
+  .arquivo-row:last-child{ border-bottom:1px solid var(--branco); }
+  .arquivo-row .periodo{
+    font-size:14px; font-weight:700; letter-spacing:.22em;
+    text-transform:uppercase; color:var(--verde);
+  }
+  .arquivo-row .periodo.amarelo{ color:var(--amarelo); }
+  .arquivo-row .funcao{ font-size:20px; font-weight:800; line-height:1.25; }
+  .arquivo-row .desc{ font-size:15px; color:var(--branco); }
+  .arquivo-row .desc strong{ color:var(--amarelo); font-weight:800; }
+
+  /* ---------- 05 · Prova e presença ---------- */
+  .presenca h2{
+    margin:20px 0 0; font-size:clamp(30px, 3.6vw, 48px);
+    line-height:1.1; letter-spacing:-.02em; font-weight:800; max-width:24ch;
+  }
+  .presenca-grid{
+    display:grid; grid-template-columns:7fr 5fr;
+    gap:clamp(28px, 4vw, 56px); margin-top:clamp(44px, 5vw, 72px); align-items:start;
+  }
+  .presenca-main .slot{ aspect-ratio:4/3; }
+  .presenca-main .legenda{ border-bottom:1px solid var(--azul); padding-bottom:14px; }
+  .presenca-col{ display:grid; gap:clamp(20px, 2.5vw, 32px); }
+  .presenca-col .slot{ aspect-ratio:16/10; }
+
+  /* ---------- 06 · Bora Falar ---------- */
+  .bora-grid{
+    display:grid; grid-template-columns:5fr 7fr;
+    gap:clamp(36px, 5vw, 88px); align-items:start;
+  }
+  .bora-grid h2{
+    margin:20px 0 0; font-size:clamp(40px, 5vw, 72px);
+    line-height:1; letter-spacing:-.02em; font-weight:800; color:var(--branco);
+  }
+  .bora-sub{
+    margin:8px 0 0; font-size:14px; font-weight:600;
+    letter-spacing:.22em; text-transform:uppercase; color:var(--verde);
+  }
+  .bora-desc{ margin:26px 0 0; font-size:16px; max-width:42ch; color:var(--branco); }
+  .bora-episodio{ border-top:1px solid var(--branco); margin-top:30px; padding-top:22px; }
+  .bora-episodio .rotulo{
+    margin:0; font-size:14px; font-weight:700;
+    letter-spacing:.22em; text-transform:uppercase; color:var(--verde);
+  }
+  .bora-episodio p{ margin:8px 0 0; font-size:15px; color:var(--branco); max-width:42ch; }
+  .bora-grid .btn{ margin-top:28px; }
+  .bora-frame .slot{
+    aspect-ratio:16/9;
+    background:repeating-linear-gradient(45deg, var(--azul) 0 14px, var(--branco) 14px 15px);
+    border:1px solid var(--branco);
+  }
+  .bora-frame .legenda{ color:var(--branco); padding-top:12px; }
+
+  /* ---------- 07 · Notícias ---------- */
+  .noticias-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    gap:24px; flex-wrap:wrap;
+  }
+  .noticias-head h2{
+    margin:20px 0 0; font-size:clamp(30px, 3.6vw, 48px);
+    line-height:1.1; letter-spacing:-.02em; font-weight:800;
+  }
+  .link-verde{
+    font-size:14px; font-weight:600; color:var(--azul);
+    border-bottom:2px solid var(--verde); padding-bottom:2px;
+  }
+  .link-verde:hover{ color:var(--verde); }
+  .noticias-grid{
+    display:grid; grid-template-columns:7fr 5fr;
+    gap:clamp(36px, 5vw, 72px); margin-top:clamp(44px, 5vw, 64px); align-items:start;
+  }
+  .materia-principal a{ display:block; color:var(--azul); }
+  .materia-principal .slot{ aspect-ratio:16/10; }
+  .materia-principal .slot .slot-hero{
+    position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font-size:11px; color:var(--azul);
+  }
+  .materia-fonte{
+    margin:18px 0 0; font-size:13px; font-weight:600;
+    letter-spacing:.2em; text-transform:uppercase; color:var(--verde);
+  }
+  .materia-principal h3{
+    margin:10px 0 0; font-size:clamp(22px, 2.4vw, 30px);
+    font-weight:800; line-height:1.25; letter-spacing:-.01em;
+  }
+  .materia-principal .resumo{ margin:12px 0 0; font-size:15px; max-width:60ch; }
+  .ler-materia{
+    display:inline-block; margin-top:14px; font-size:14px; font-weight:600;
+    border-bottom:2px solid var(--verde); padding-bottom:2px;
+  }
+  .noticia-item{
+    display:block; border-top:1px solid var(--azul);
+    padding:18px 0; color:var(--azul);
+  }
+  .noticia-item:last-child{ border-bottom:1px solid var(--azul); }
+  .noticia-item:hover{ color:var(--verde); }
+  .noticia-item .fonte{
+    margin:0; font-size:12px; font-weight:600;
+    letter-spacing:.2em; text-transform:uppercase; color:var(--verde);
+  }
+  .noticia-item h3{ margin:8px 0 0; font-size:17px; font-weight:700; line-height:1.4; }
+  .noticia-item .ler-materia{ margin-top:8px; font-size:13px; padding-bottom:1px; }
+
+  /* ---------- 08 · Chamada eleitoral ---------- */
+  .voto{ padding:clamp(80px, 10vw, 140px) 0; }
+  .voto-rotulo{
+    margin:0; font-size:14px; font-weight:600;
+    letter-spacing:.26em; text-transform:uppercase; color:var(--branco);
+  }
+  #num-final{
+    margin:10px 0 0; font-size:clamp(96px, 16vw, 240px);
+    font-weight:800; line-height:.95; letter-spacing:-.01em; color:var(--amarelo);
+  }
+  .voto-base{
+    display:grid; grid-template-columns:1fr auto;
+    gap:28px; align-items:center;
+    border-top:1px solid var(--branco);
+    margin-top:clamp(32px, 4vw, 52px); padding-top:28px;
+  }
+  .voto-base p{
+    margin:0; font-size:clamp(18px, 2vw, 24px);
+    font-weight:600; max-width:34ch; line-height:1.4;
+  }
+  .voto-base .cta-voto{ min-height:54px; padding:0 34px; font-size:16px; letter-spacing:.06em; }
+
+  /* ---------- 09 · Newsletter ---------- */
+  .news-grid{
+    display:grid; grid-template-columns:6fr 5fr;
+    gap:clamp(32px, 5vw, 88px); align-items:start;
+  }
+  .news-grid h2{
+    margin:20px 0 0; font-size:clamp(30px, 3.6vw, 48px);
+    line-height:1.1; letter-spacing:-.02em; font-weight:800;
+  }
+  .news-grid .apoio{ margin:18px 0 0; font-size:16px; max-width:50ch; }
+  .news-form-col{ padding-top:clamp(0px, 3vw, 44px); }
+  .news-form{
+    display:flex; flex-wrap:wrap; gap:12px;
+    border-top:1px solid var(--azul); padding-top:26px;
+  }
+  .news-form label{
+    width:100%; font-size:14px; font-weight:600;
+    letter-spacing:.2em; text-transform:uppercase;
+  }
+  .news-form input{
+    flex:1; min-width:220px; min-height:50px; padding:0 18px;
+    border:1px solid var(--azul); border-radius:2px;
+    font-family:inherit; font-size:15px; color:var(--azul); background:var(--branco);
+  }
+  #news-status{
+    margin:16px 0 0; font-size:13px; font-weight:600;
+    color:var(--verde); max-width:46ch;
+  }
+  .news-privacidade{ margin:16px 0 0; font-size:12px; max-width:46ch; }
+
+  /* ---------- Rodapé ---------- */
+  footer{ background:var(--azul); color:var(--branco); border-top:1px solid var(--branco); }
+  .foot-inner{ padding:clamp(56px, 7vw, 88px) 0 40px; }
+  .foot-grid{
+    display:grid; grid-template-columns:minmax(180px,1fr) 1fr 1fr 1.4fr;
+    gap:clamp(32px, 4vw, 56px);
+  }
+  .foot-logos{ display:flex; flex-direction:column; gap:28px; align-items:flex-start; }
+  .foot-logos .l-candidato{ width:min(240px, 100%); height:auto; }
+  .foot-logos .l-partido{ width:130px; height:auto; }
+  .foot-col{ display:flex; flex-direction:column; gap:12px; }
+  .foot-col .titulo{
+    font-size:13px; font-weight:700; letter-spacing:.24em;
+    text-transform:uppercase; color:var(--verde);
+  }
+  .foot-col a{ color:var(--branco); font-size:14px; }
+  .foot-col a:hover{ color:var(--verde); }
+  .foot-col p{ margin:0; font-size:13px; color:var(--branco); }
+  .canal{ display:flex; align-items:center; gap:10px; }
+  .canal svg{ width:18px; height:18px; flex-shrink:0; }
+  .foot-col .aviso-canais{
+    margin-top:6px; font-size:14px;
+    font-weight:600; color:var(--verde);
+  }
+  .foot-base{
+    display:flex; justify-content:space-between; align-items:center;
+    gap:16px; flex-wrap:wrap;
+    border-top:1px solid var(--branco);
+    margin-top:clamp(40px, 5vw, 64px); padding-top:22px;
+  }
+  .foot-base .copy{ margin:0; font-size:12px; color:var(--branco); }
+  .foot-base .caderno{
+    margin:0; font-size:13px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--verde);
+  }
+  /* Faixa de assinatura: proporção de uso das cores oficiais (manual, seção 03) */
+  .faixa{ display:grid; grid-template-columns:40fr 25fr 20fr 15fr; height:8px; }
+  .faixa span:nth-child(1){ background:var(--azul); border-top:1px solid var(--branco); }
+  .faixa span:nth-child(2){ background:var(--verde); }
+  .faixa span:nth-child(3){ background:var(--amarelo); }
+  .faixa span:nth-child(4){ background:var(--branco); }
+
+  /* ---------- Responsivo (breakpoint único: 960px) ---------- */
+  @media (max-width:960px){
+    .hero-grid, .escuta-head, .pauta-grid, .bandeiras-head,
+    .bandeira.fig-dir, .bandeira.fig-esq, .arquivo-row,
+    .presenca-grid, .bora-grid, .noticias-grid, .news-grid,
+    .voto-base, .foot-grid{
+      grid-template-columns:1fr;
+    }
+    .fluxo-row{ grid-template-columns:64px 1fr; }
+    .fluxo-row .desc{ grid-column:2; }
+    #nav-links{ display:none; }
+    #btn-menu{ display:inline-flex; }
+    #hero-foto{ min-height:380px; }
+    .hero-grid{ gap:44px; }
+    #num-final{ font-size:clamp(88px, 22vw, 150px); }
+  }
+  @media (min-width:961px){
+    #nav-mobile{ display:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ CABEÇALHO ============ -->
+<header>
+  <div class="wrap nav-bar">
+    <!-- Logo extraída da arte oficial do adesivo (versão de apoio, sem número — o 20020 aparece no CTA ao lado).
+         Substituir pelo PNG oficial da coordenação quando enviado. -->
+    <a href="#inicio" class="logo-link" aria-label="Professor Allan Kardec — início">
+      <img src="assets/logo-allan-kardec.png" alt="Professor Allan Kardec · Deputado Estadual">
+    </a>
+    <nav id="nav-links" class="nav-links" aria-label="Navegação principal">
+      <a href="#inicio">Início</a>
+      <a href="#escuta">Escuta</a>
+      <a href="#bandeiras">Bandeiras</a>
+      <a href="#trajetoria">Trajetória</a>
+      <a href="#bora-falar">Bora Falar</a>
+      <a href="#noticias">Notícias</a>
+      <a href="#newsletter">Newsletter</a>
+      <a href="#voto" class="cta-voto">VOTE 20020</a>
+    </nav>
+    <button id="btn-menu" aria-expanded="false" aria-controls="nav-mobile" aria-label="Abrir ou fechar o menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav id="nav-mobile" aria-label="Menu">
+    <a href="#inicio">Início</a>
+    <a href="#escuta">Escuta</a>
+    <a href="#bandeiras">Bandeiras</a>
+    <a href="#trajetoria">Trajetória</a>
+    <a href="#bora-falar">Bora Falar</a>
+    <a href="#noticias">Notícias</a>
+    <a href="#newsletter">Newsletter</a>
+    <a href="#voto" class="cta-voto">VOTE 20020</a>
+  </nav>
+</header>
+
+<main>
+<!-- ============ HERO ============ -->
+<section id="inicio" class="hero">
+  <div class="hero-grid">
+    <div class="hero-txt">
+      <p class="hero-kicker">Mato Grosso · Eleições 2026</p>
+      <h1 class="balance">Mato Grosso precisa ser ouvido para avançar.</h1>
+      <p class="hero-lead">Educação, ciência, tecnologia e oportunidades construídas com quem vive a realidade de cada região.</p>
+      <div class="hero-ctas">
+        <a href="#escuta" class="btn btn-branco">Participe da escuta</a>
+        <a href="#trajetoria" class="btn btn-borda-branca">Conheça a trajetória</a>
+      </div>
+      <div class="hero-num">
+        <strong>20020</strong>
+        <span class="hero-num-rotulo">
+          <span>Professor Allan Kardec</span>
+          <span class="verde">Deputado Estadual · Podemos 20</span>
+        </span>
+      </div>
+    </div>
+    <figure class="hero-figura">
+      <div id="hero-foto">
+        <!-- FOTO OFICIAL: substituir pela fotografia oficial de campanha (retrato documental, mín. 1200px).
+             A imagem abaixo é provisória, vinda do portal oficial. Não gerar rosto ou foto falsa. -->
+        <span class="slot-hero mono">foto-oficial-campanha · retrato documental</span>
+        <img src="https://professorallankardec.com.br/media/images/Captura_de_tela_2026-07-17_184707.png" alt="Professor Allan Kardec" onerror="this.style.display='none'">
+      </div>
+      <figcaption>Registro · portal oficial — professorallankardec.com.br</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ 01 MANIFESTO DE ESCUTA ============ -->
+<section id="escuta" class="sec sec-branca">
+  <div class="wrap">
+    <div class="escuta-head">
+      <div>
+        <p class="kicker">01 · Escuta</p>
+        <h2 class="balance">A velha campanha só fala. A nossa também escuta.</h2>
+      </div>
+      <p>Ouvir é o ponto de partida. Antes de apresentar respostas prontas, esta campanha percorre Mato Grosso para compreender necessidades reais — e transformar o que for ouvido em compromissos que podem ser acompanhados e verificados.</p>
+    </div>
+    <div class="fluxo">
+      <div class="fluxo-row">
+        <span class="num">01</span>
+        <span class="palavra">Escutar</span>
+        <span class="desc">Conversas abertas com quem vive a realidade de cada região do estado.</span>
+      </div>
+      <div class="fluxo-row">
+        <span class="num">02</span>
+        <span class="palavra">Entender</span>
+        <span class="desc">Organizar o que foi ouvido em prioridades claras, por tema e por território.</span>
+      </div>
+      <div class="fluxo-row">
+        <span class="num">03</span>
+        <span class="palavra">Responder</span>
+        <span class="desc">Transformar prioridades em propostas e ações concretas de mandato.</span>
+      </div>
+      <div class="fluxo-row">
+        <span class="num">04</span>
+        <span class="palavra">Medir</span>
+        <span class="desc">Acompanhar os resultados e prestar contas do que foi feito.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 MATO GROSSO EM PAUTA ============ -->
+<section id="pauta" class="sec sec-azul pauta">
+  <div class="wrap">
+    <p class="kicker">02 · Mato Grosso em pauta</p>
+    <h2 class="balance">O que precisa mudar onde você vive?</h2>
+    <div class="pauta-grid">
+      <!-- Índice editorial de temas. INTEGRAÇÃO FUTURA: formulário / mapa / ferramenta de escuta entra neste bloco. -->
+      <div>
+        <div class="tema-row"><span class="indice">A</span><span class="tema">Educação</span></div>
+        <div class="tema-row"><span class="indice">B</span><span class="tema">Ciência e tecnologia</span></div>
+        <div class="tema-row"><span class="indice">C</span><span class="tema">Qualificação e emprego</span></div>
+        <div class="tema-row"><span class="indice">D</span><span class="tema">Esporte</span></div>
+        <div class="tema-row"><span class="indice">E</span><span class="tema">Cultura</span></div>
+        <div class="tema-row"><span class="indice">F</span><span class="tema">Juventude</span></div>
+        <div class="tema-row"><span class="indice">G</span><span class="tema">Desenvolvimento regional</span></div>
+      </div>
+      <div class="pauta-apoio">
+        <p>Cada região de Mato Grosso tem uma urgência diferente. Escolha o tema que mais pesa na sua cidade e envie a sua pauta pelos canais da campanha.</p>
+        <a href="https://instagram.com/profallankardec" class="btn btn-branco">Enviar pauta pelo Instagram</a>
+        <p class="nota-pendencia">A ferramenta de escuta desta página — formulário e mapa por município — está em preparação e será conectada aqui.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 BANDEIRAS ============ -->
+<section id="bandeiras" class="sec sec-branca">
+  <div class="wrap">
+    <div class="bandeiras-head">
+      <div>
+        <p class="kicker">03 · Bandeiras</p>
+        <h2 class="balance">Quatro frentes de trabalho</h2>
+      </div>
+      <p>Prioridades de quem conhece a educação por dentro: a experiência de professor, a vivência de gestor público e o compromisso com o futuro de Mato Grosso.</p>
+    </div>
+
+    <article class="bandeira fig-dir">
+      <span class="num">01</span>
+      <div class="txt">
+        <h3>Educação pública de qualidade</h3>
+        <p>Valorização dos professores, escolas estruturadas e ensino conectado com a realidade dos estudantes mato-grossenses.</p>
+      </div>
+      <figure>
+        <!-- Imagem provisória do portal oficial; trocar pelo registro definitivo da coordenação -->
+        <div class="slot"><span class="slot-label mono">foto-bandeira-educacao</span>
+          <img src="https://professorallankardec.com.br/media/images/Captura_de_tela_2026-07-17_180051_yFHOYxk.png" alt="Allan Kardec discursa na tribuna da Assembleia Legislativa de Mato Grosso" loading="lazy" onerror="this.style.display='none'">
+        </div>
+        <figcaption class="legenda">Na tribuna da Assembleia Legislativa · portal oficial</figcaption>
+      </figure>
+    </article>
+
+    <article class="bandeira fig-esq">
+      <span class="num">02</span>
+      <figure>
+        <!-- Imagem provisória do portal oficial; trocar pelo registro definitivo da coordenação -->
+        <div class="slot"><span class="slot-label mono">foto-bandeira-ciencia-tecnologia</span>
+          <img src="https://professorallankardec.com.br/media/images/Captura_de_tela_2026-07-17_190146.png" alt="Allan Kardec, presidente do Consecti" loading="lazy" style="object-position:top" onerror="this.style.display='none'">
+        </div>
+        <figcaption class="legenda">Posse na presidência do Consecti · portal oficial</figcaption>
+      </figure>
+      <div class="txt">
+        <h3>Ciência, tecnologia e inovação</h3>
+        <p>Continuidade do trabalho à frente da Seciteci: pesquisa, inovação e tecnologia a serviço do desenvolvimento do estado.</p>
+        <p class="evidencia">Presidiu o Consecti — a primeira vez que um gestor de Mato Grosso liderou o conselho nacional.</p>
+      </div>
+    </article>
+
+    <article class="bandeira fig-dir">
+      <span class="num">03</span>
+      <div class="txt">
+        <h3>Qualificação e emprego</h3>
+        <p>Programas estaduais de qualificação profissional para gerar renda e abrir portas para a juventude e os trabalhadores.</p>
+      </div>
+      <figure>
+        <!-- Imagem provisória do portal oficial; trocar pelo registro definitivo da coordenação -->
+        <div class="slot"><span class="slot-label mono">foto-bandeira-qualificacao</span>
+          <img src="https://professorallankardec.com.br/media/images/Captura_de_tela_2026-07-17_185044.png" alt="Allan Kardec em reunião sobre o programa estadual de qualificação" loading="lazy" onerror="this.style.display='none'">
+        </div>
+        <figcaption class="legenda">Programa estadual de qualificação · portal oficial</figcaption>
+      </figure>
+    </article>
+
+    <article class="bandeira fig-esq">
+      <span class="num">04</span>
+      <figure>
+        <!-- Imagem provisória do portal oficial; trocar pelo registro definitivo da coordenação -->
+        <div class="slot"><span class="slot-label mono">foto-bandeira-esporte-cultura</span>
+          <img src="https://professorallankardec.com.br/media/images/Captura_de_tela_2026-07-17_185342.png" alt="Allan Kardec fala ao microfone em sessão sobre esporte e aprendizado" loading="lazy" style="object-position:top" onerror="this.style.display='none'">
+        </div>
+        <figcaption class="legenda">Esporte e aprendizado · portal oficial</figcaption>
+      </figure>
+      <div class="txt">
+        <h3>Esporte e cultura</h3>
+        <p>Esporte como ferramenta de aprendizado e inclusão, e cultura valorizada como identidade do povo de Mato Grosso.</p>
+        <p class="evidencia">No mandato de deputado, atuação marcada por audiências públicas e políticas para o esporte.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============ 04 TRAJETÓRIA ============ -->
+<section id="trajetoria" class="sec sec-azul trajetoria">
+  <div class="wrap">
+    <p class="kicker">04 · Trajetória</p>
+    <h2 class="balance">Uma trajetória que começa na sala de aula.</h2>
+    <p class="trajetoria-nome">Allan Kardec Pinto Acosta Benitez · Professor · Doutor · Gestor público</p>
+
+    <div class="arquivo">
+      <div class="arquivo-row">
+        <span class="periodo">Origem</span>
+        <span class="funcao">Professor e doutor</span>
+        <span class="desc">Professor universitário e pesquisador, com uma vida dedicada à educação em Mato Grosso.</span>
+      </div>
+      <div class="arquivo-row">
+        <span class="periodo">Mandato</span>
+        <span class="funcao">Deputado Estadual</span>
+        <span class="desc">Atuação marcada por audiências públicas, defesa da educação e políticas para o esporte.</span>
+      </div>
+      <div class="arquivo-row">
+        <span class="periodo">Gestão</span>
+        <span class="funcao">Secretário da Seciteci</span>
+        <span class="desc">Ciência, tecnologia e qualificação profissional em todas as regiões do estado. Presidiu o Consecti — Conselho Nacional de Secretários para Assuntos de Ciência e Tecnologia.</span>
+      </div>
+      <div class="arquivo-row">
+        <span class="periodo">Reconhecimento</span>
+        <span class="funcao">Academia Mato-grossense de Letras</span>
+        <span class="desc">Membro efetivo, em reconhecimento à sua contribuição intelectual.</span>
+      </div>
+      <div class="arquivo-row">
+        <span class="periodo amarelo">2026</span>
+        <span class="funcao">Candidato a Deputado Estadual</span>
+        <span class="desc">Pelo Podemos (20), com o número <strong>20020</strong>, para seguir trabalhando por Mato Grosso.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 PROVA E PRESENÇA ============ -->
+<section id="presenca" class="sec sec-branca presenca">
+  <div class="wrap">
+    <p class="kicker">05 · Prova e presença</p>
+    <h2 class="balance">Trabalho registrado onde ele acontece</h2>
+    <div class="presenca-grid">
+      <figure class="presenca-main">
+        <!-- Imagem provisória do portal oficial; trocar pela fotografia principal do ensaio -->
+        <div class="slot"><span class="slot-label mono">foto-encontro-comunidade</span>
+          <img src="https://professorallankardec.com.br/media/images/Captura_de_tela_2026-07-17_191301.png" alt="Allan Kardec conversa com morador durante visita a Castanheira" loading="lazy" onerror="this.style.display='none'">
+        </div>
+        <figcaption class="legenda">Visita a Castanheira · portal oficial</figcaption>
+      </figure>
+      <div class="presenca-col">
+        <figure>
+          <div class="slot"><span class="slot-label mono">foto-educacao</span>
+            <img src="https://professorallankardec.com.br/media/images/Captura_de_tela_2026-07-17_190944.png" alt="Allan Kardec defende pautas no plenário da Assembleia Legislativa" loading="lazy" onerror="this.style.display='none'">
+          </div>
+          <figcaption class="legenda">Plenário da Assembleia Legislativa · portal oficial</figcaption>
+        </figure>
+        <figure>
+          <div class="slot"><span class="slot-label mono">foto-ciencia-tecnologia</span>
+            <img src="https://professorallankardec.com.br/media/images/Captura_de_tela_2026-07-17_192118.png" alt="Participantes de audiência pública na Assembleia Legislativa de Mato Grosso" loading="lazy" onerror="this.style.display='none'">
+          </div>
+          <figcaption class="legenda">Audiência pública na ALMT · portal oficial</figcaption>
+        </figure>
+        <figure>
+          <div class="slot"><span class="slot-label mono">foto-esporte-cultura</span>
+            <img src="https://professorallankardec.com.br/media/images/Captura_de_tela_2026-07-17_190435.png" alt="Convite do lançamento do livro O Leão da Colina, sobre o centenário do Clube Esportivo Dom Bosco" loading="lazy" style="object-position:left" onerror="this.style.display='none'">
+          </div>
+          <figcaption class="legenda">Lançamento do livro O Leão da Colina · portal oficial</figcaption>
+        </figure>
+      </div>
+    </div>
+    <p class="nota-pendencia" style="margin-top:24px;max-width:none">Imagens provisórias do portal oficial — os registros definitivos do ensaio serão publicados pela coordenação de comunicação da campanha.</p>
+  </div>
+</section>
+
+<!-- ============ 06 BORA FALAR ============ -->
+<section id="bora-falar" class="sec sec-azul">
+  <div class="wrap bora-grid">
+    <div>
+      <p class="kicker">06 · Programa</p>
+      <h2>Bora Falar</h2>
+      <p class="bora-sub">Episódios novos toda semana</p>
+      <p class="bora-desc">Análises, entrevistas e bastidores da educação, da ciência e da política de Mato Grosso, direto com o Professor Allan Kardec — com clareza e sem enrolação. É a extensão prática da proposta de escuta: uma boa conversa por semana.</p>
+      <div class="bora-episodio">
+        <p class="rotulo">Episódio mais recente</p>
+        <p>O título e o player do episódio da semana são publicados aqui e no portal oficial.</p>
+      </div>
+      <a href="https://www.youtube.com/@BoraFalarcomProfessorAllanKard" class="btn btn-branco">Assistir ao Bora Falar</a>
+    </div>
+    <figure class="bora-frame">
+      <!-- INTEGRAÇÃO FUTURA: incorporar aqui o player de vídeo (iframe do episódio mais recente), proporção 16:9.
+           Imagem provisória do portal oficial enquanto o player não é conectado. -->
+      <div class="slot"><span class="slot-label mono">frame-bora-falar · espaço para vídeo</span>
+        <img src="https://professorallankardec.com.br/media/images/Captura_de_tela_2026-07-17_191609.png" alt="Allan Kardec fala ao microfone em evento" loading="lazy" onerror="this.style.display='none'">
+      </div>
+      <figcaption class="legenda">Registro · portal oficial — frame do episódio a publicar</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ============ 07 NOTÍCIAS ============ -->
+<section id="noticias" class="sec sec-branca">
+  <div class="wrap">
+    <div class="noticias-head">
+      <div>
+        <p class="kicker">07 · Notícias</p>
+        <h2>O que a imprensa está dizendo</h2>
+      </div>
+      <a href="https://professorallankardec.com.br/" class="link-verde">Ver todas as notícias</a>
+    </div>
+    <div class="noticias-grid">
+      <article class="materia-principal">
+        <a href="https://professorallankardec.com.br/article/2">
+          <div class="slot">
+            <span class="slot-hero mono"><span class="slot-label">imagem-materia-principal</span></span>
+            <img src="https://professorallankardec.com.br/media/images/Captura_de_tela_2026-07-17_183403.png" alt="Allan Kardec durante anúncio da candidatura à ALMT" loading="lazy" onerror="this.style.display='none'">
+          </div>
+          <p class="materia-fonte">Saiu na mídia · professorallankardec.com.br</p>
+          <h3>Allan Kardec confirma candidatura à ALMT e descarta disputa por vaga federal</h3>
+          <p class="resumo">Ex-secretário da Seciteci confirma retorno à disputa eleitoral e reforça aliança com Max Russi no Podemos.</p>
+          <span class="ler-materia">Ler matéria</span>
+        </a>
+      </article>
+      <div>
+        <a href="https://professorallankardec.com.br/article/11" class="noticia-item">
+          <p class="fonte">Saiu na mídia</p>
+          <h3>Professor Allan se filia ao Podemos e entra na corrida para deputado estadual</h3>
+          <span class="ler-materia">Ler matéria</span>
+        </a>
+        <a href="https://professorallankardec.com.br/article/5" class="noticia-item">
+          <p class="fonte">Saiu na mídia</p>
+          <h3>Quem é o professor Allan Kardec, pré-candidato a deputado estadual em Mato Grosso</h3>
+          <span class="ler-materia">Ler matéria</span>
+        </a>
+        <a href="https://professorallankardec.com.br/article/4" class="noticia-item">
+          <p class="fonte">Saiu na mídia</p>
+          <h3>Allan Kardec assume Seciteci a partir de janeiro</h3>
+          <span class="ler-materia">Ler matéria</span>
+        </a>
+        <a href="https://professorallankardec.com.br/article/9" class="noticia-item">
+          <p class="fonte">Saiu na mídia</p>
+          <h3>Secretário de MT é empossado presidente do Consecti</h3>
+          <span class="ler-materia">Ler matéria</span>
+        </a>
+        <a href="https://professorallankardec.com.br/article/17" class="noticia-item">
+          <p class="fonte">Saiu na mídia</p>
+          <h3>Professor Allan Kardec toma posse na Academia Mato-grossense de Letras</h3>
+          <span class="ler-materia">Ler matéria</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 08 CHAMADA ELEITORAL ============ -->
+<section id="voto" class="sec-azul voto">
+  <div class="wrap">
+    <p class="voto-rotulo">Professor Allan Kardec · Deputado Estadual · Podemos 20</p>
+    <p id="num-final">20020</p>
+    <div class="voto-base">
+      <p>Para Mato Grosso ser ouvido, o voto tem número.</p>
+      <a href="https://instagram.com/profallankardec" class="cta-voto">VOTE 20020</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 09 NEWSLETTER ============ -->
+<section id="newsletter" class="sec sec-branca">
+  <div class="wrap news-grid">
+    <div>
+      <p class="kicker">09 · Acompanhe</p>
+      <h2 class="balance">Receba as novidades da campanha no seu e-mail</h2>
+      <p class="apoio">Notícias, agenda da escuta e os próximos passos do Professor Allan Kardec, sem spam e com a clareza de sempre.</p>
+    </div>
+    <div class="news-form-col">
+      <!-- INTEGRAÇÃO PENDENTE: conectar este formulário à plataforma de e-mail marketing da campanha
+           (definir action/endpoint). Enquanto não houver backend, o envio não é simulado. -->
+      <form id="news-form" class="news-form">
+        <label for="news-email">Seu melhor e-mail</label>
+        <input id="news-email" type="email" name="email" required placeholder="nome@exemplo.com.br">
+        <button type="submit" class="btn btn-azul">Quero receber</button>
+      </form>
+      <p id="news-status" role="status" hidden>A inscrição ainda não está ativa — este canal será conectado à plataforma de e-mail da campanha. Enquanto isso, acompanhe pelo Instagram @profallankardec.</p>
+      <p class="news-privacidade">Seu e-mail será usado apenas para comunicação da campanha. A política de privacidade será publicada junto com a ativação deste canal.</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ============ RODAPÉ ============ -->
+<footer>
+  <div class="wrap foot-inner">
+    <div class="foot-grid">
+      <!-- Logos extraídas das artes oficiais (adesivo e bola); substituir pelos PNGs da coordenação quando enviados -->
+      <div class="foot-logos">
+        <img class="l-candidato" src="assets/logo-allan-kardec-20020.png" alt="Professor Allan Kardec · 20020 · Deputado Estadual">
+        <img class="l-partido" src="assets/logo-podemos.png" alt="Podemos · 20 · Mudar o Brasil">
+      </div>
+      <nav class="foot-col" aria-label="Navegação do rodapé">
+        <span class="titulo">Página</span>
+        <a href="#inicio">Início</a>
+        <a href="#escuta">Escuta</a>
+        <a href="#bandeiras">Bandeiras</a>
+        <a href="#trajetoria">Trajetória</a>
+        <a href="#noticias">Notícias</a>
+        <a href="#newsletter">Newsletter</a>
+      </nav>
+      <div class="foot-col">
+        <span class="titulo">Canais oficiais</span>
+        <a class="canal" href="https://instagram.com/profallankardec">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="4"/><line x1="17.2" y1="6.8" x2="17.2" y2="6.8" stroke-width="2.6"/></svg>
+          Instagram · @profallankardec
+        </a>
+        <a class="canal" href="https://www.youtube.com/@BoraFalarcomProfessorAllanKard">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="3.5"/><path d="M10 9.2l5 2.8-5 2.8z"/></svg>
+          YouTube · Bora Falar
+        </a>
+        <!-- PENDENTE: substituir pelo e-mail oficial da campanha assim que definido (atualizar também o href mailto:) -->
+        <span class="canal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/></svg>
+          <span class="mono" style="font-size:12px">e-mail-oficial · a publicar</span>
+        </span>
+        <a class="canal" href="https://professorallankardec.com.br/">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.4 2.6 3.8 5.9 3.8 9s-1.4 6.4-3.8 9c-2.4-2.6-3.8-5.9-3.8-9S9.6 5.6 12 3z"/></svg>
+          Site · professorallankardec.com.br
+        </a>
+        <p class="aviso-canais">Estes são os únicos canais oficiais de comunicação da campanha. Não utilizamos nenhuma outra rede social ou aplicativo de mensagens.</p>
+      </div>
+      <div class="foot-col">
+        <span class="titulo">Informações</span>
+        <p>Eleições 2026 · Allan Kardec · Deputado Estadual · Podemos (20) · nº 20020.</p>
+        <!-- LEGAL: manter aqui o CNPJ e demais informações exigidas pela Lei 9.504/97 -->
+        <p>CNPJ: 68.470.489/0001-07</p>
+        <!-- PRIVACIDADE / FORMULÁRIOS: quando o formulário de escuta for conectado (ver seção "Mato Grosso em pauta"),
+             publicar aqui a política de privacidade e o aviso de uso de dados. Nenhum formulário desta página envia dados hoje. -->
+        <p>Os formulários desta página ainda não enviam dados; a política de privacidade será publicada junto com a ativação do canal de escuta.</p>
+      </div>
+    </div>
+    <div class="foot-base">
+      <p class="copy">© 2026 Professor Allan Kardec. Todos os direitos reservados.</p>
+      <p class="caderno">Caderno de escuta de Mato Grosso</p>
+    </div>
+  </div>
+  <div class="faixa" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+</footer>
+
+<script>
+  // Menu mobile: abre/fecha; clicar em link fecha
+  const btnMenu = document.getElementById('btn-menu');
+  const navMobile = document.getElementById('nav-mobile');
+  btnMenu.addEventListener('click', () => {
+    const open = navMobile.classList.toggle('open');
+    btnMenu.setAttribute('aria-expanded', open);
+  });
+  navMobile.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navMobile.classList.remove('open');
+    btnMenu.setAttribute('aria-expanded', 'false');
+  }));
+
+  // Newsletter — sem backend: não simula envio bem-sucedido, apenas informa
+  // que o canal ainda não está ativo (INTEGRAÇÃO PENDENTE: apontar para a
+  // plataforma de e-mail marketing da campanha e trocar por confirmação real).
+  document.getElementById('news-form').addEventListener('submit', ev => {
+    ev.preventDefault();
+    document.getElementById('news-status').hidden = false;
+  });
+</script>
+</body>
+</html>
