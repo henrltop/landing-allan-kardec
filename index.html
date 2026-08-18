@@ -8,7 +8,6 @@
 <meta property="og:title" content="Professor Allan Kardec · 20020 · Deputado Estadual">
 <meta property="og:description" content="A velha campanha só fala. A nossa também escuta. Mato Grosso · Eleições 2026.">
 <meta property="og:type" content="website">
-<!-- FAVICON: substituir pelo arquivo oficial quando disponível -->
 <link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -484,6 +483,23 @@
   .faixa span:nth-child(3){ background:var(--amarelo); }
   .faixa span:nth-child(4){ background:var(--branco); }
 
+  /* ---------- Animações (revelação ao rolar + hovers suaves) ---------- */
+  .rv, .rv-dir{ opacity:0; transition:opacity .65s ease, transform .65s ease; }
+  .rv{ transform:translateY(26px); }
+  .rv-dir{ transform:translateX(34px); }
+  .rv.on, .rv-dir.on{ opacity:1; transform:none; }
+  .nav-links a, #nav-mobile a, .btn, .cta-voto, .canal, .foot-col a,
+  .link-verde, .noticia-item, .ler-materia{
+    transition:color .2s, background-color .2s, border-color .2s;
+  }
+  .materia-principal .slot img{ transition:transform .5s ease; }
+  .materia-principal a:hover .slot img{ transform:scale(1.04); }
+  @media (prefers-reduced-motion:reduce){
+    .rv, .rv-dir{ opacity:1; transform:none; transition:none; }
+    .materia-principal .slot img{ transition:none; }
+    .materia-principal a:hover .slot img{ transform:none; }
+  }
+
   /* ---------- Responsivo (breakpoint único: 960px) ---------- */
   @media (max-width:960px){
     .hero-grid, .escuta-head, .pauta-grid, .bandeiras-head,
@@ -510,8 +526,6 @@
 <!-- ============ CABEÇALHO ============ -->
 <header>
   <div class="wrap nav-bar">
-    <!-- Logo extraída da arte oficial do adesivo (versão de apoio, sem número — o 20020 aparece no CTA ao lado).
-         Substituir pelo PNG oficial da coordenação quando enviado. -->
     <a href="#inicio" class="logo-link" aria-label="Professor Allan Kardec — início">
       <img src="assets/logo-allan-kardec.png" alt="Professor Allan Kardec · Deputado Estadual">
     </a>
@@ -563,8 +577,6 @@
     </div>
     <figure class="hero-figura">
       <div id="hero-foto">
-        <!-- FOTO OFICIAL: quando sair o ensaio oficial de campanha, basta trocar o arquivo abaixo.
-             Registro atual: acervo próprio (banco de imagens do Drive da coordenação). -->
         <span class="slot-hero mono">foto-oficial-campanha · retrato documental</span>
         <img src="assets/fotos/hero-allan.jpg" alt="Professor Allan Kardec fala ao microfone em mesa oficial, com as bandeiras do Brasil e de Mato Grosso ao fundo" onerror="this.style.display='none'">
       </div>
@@ -614,7 +626,6 @@
     <p class="kicker">02 · Mato Grosso em pauta</p>
     <h2 class="balance">O que precisa mudar onde você vive?</h2>
     <div class="pauta-grid">
-      <!-- Índice editorial de temas. INTEGRAÇÃO FUTURA: formulário / mapa / ferramenta de escuta entra neste bloco. -->
       <div>
         <div class="tema-row"><span class="indice">A</span><span class="tema">Educação</span></div>
         <div class="tema-row"><span class="indice">B</span><span class="tema">Ciência e tecnologia</span></div>
@@ -651,7 +662,6 @@
         <p>Valorização dos professores, escolas estruturadas e ensino conectado com a realidade dos estudantes mato-grossenses.</p>
       </div>
       <figure>
-        <!-- Foto SECOM-MT (Michel Alvim) registrada em agenda de gestão. VALIDAR com o jurídico o uso em material eleitoral (art. 73, Lei 9.504/97). -->
         <div class="slot"><span class="slot-label mono">foto-bandeira-educacao</span>
           <img src="assets/fotos/bandeira-educacao.jpg" alt="Estudantes de uniforme azul estudam em sala de aula da Escola Técnica Estadual de Alta Floresta" loading="lazy" onerror="this.style.display='none'">
         </div>
@@ -749,8 +759,6 @@
     <h2 class="balance">Trabalho registrado onde ele acontece</h2>
     <div class="presenca-grid">
       <figure class="presenca-main">
-        <!-- Fotos desta seção: acervo da gestão na Seciteci (visitas ao Parque Tecnológico).
-             As de crédito SECOM-MT: VALIDAR com o jurídico o uso em material eleitoral (art. 73, Lei 9.504/97). -->
         <div class="slot"><span class="slot-label mono">foto-apresentacao-projeto</span>
           <img src="assets/fotos/presenca-projeto.jpg" alt="Allan Kardec apresenta o projeto do Parque Tecnológico em um tablet a comitiva de autoridades" loading="lazy" onerror="this.style.display='none'">
         </div>
@@ -796,8 +804,6 @@
       <a href="https://www.youtube.com/@BoraFalarcomProfessorAllanKard" class="btn btn-branco">Assistir ao Bora Falar</a>
     </div>
     <figure class="bora-frame">
-      <!-- INTEGRAÇÃO FUTURA: incorporar aqui o player de vídeo (iframe do episódio mais recente), proporção 16:9.
-           Imagem de espera: Allan em entrevista de estúdio (acervo próprio). -->
       <div class="slot"><span class="slot-label mono">frame-bora-falar · espaço para vídeo</span>
         <img src="assets/fotos/bora-falar-estudio.jpg" alt="Allan Kardec concede entrevista em estúdio de televisão, com câmera e telão em quadro" loading="lazy" onerror="this.style.display='none'">
       </div>
@@ -881,8 +887,6 @@
       <p class="apoio">Notícias, agenda da escuta e os próximos passos do Professor Allan Kardec, sem spam e com a clareza de sempre.</p>
     </div>
     <div class="news-form-col">
-      <!-- INTEGRAÇÃO PENDENTE: conectar este formulário à plataforma de e-mail marketing da campanha
-           (definir action/endpoint). Enquanto não houver backend, o envio não é simulado. -->
       <form id="news-form" class="news-form">
         <label for="news-email">Seu melhor e-mail</label>
         <input id="news-email" type="email" name="email" required placeholder="nome@exemplo.com.br">
@@ -899,7 +903,6 @@
 <footer>
   <div class="wrap foot-inner">
     <div class="foot-grid">
-      <!-- Logos extraídas das artes oficiais (adesivo e bola); substituir pelos PNGs da coordenação quando enviados -->
       <div class="foot-logos">
         <img class="l-candidato" src="assets/logo-allan-kardec-20020.png" alt="Professor Allan Kardec · 20020 · Deputado Estadual">
         <img class="l-partido" src="assets/logo-podemos.png" alt="Podemos · 20 · Mudar o Brasil">
@@ -923,11 +926,6 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="3.5"/><path d="M10 9.2l5 2.8-5 2.8z"/></svg>
           YouTube · Bora Falar
         </a>
-        <!-- PENDENTE: substituir pelo e-mail oficial da campanha assim que definido (atualizar também o href mailto:) -->
-        <span class="canal">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/></svg>
-          <span class="mono" style="font-size:12px">e-mail-oficial · a publicar</span>
-        </span>
         <a class="canal" href="https://professorallankardec.com.br/">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.4 2.6 3.8 5.9 3.8 9s-1.4 6.4-3.8 9c-2.4-2.6-3.8-5.9-3.8-9S9.6 5.6 12 3z"/></svg>
           Site · professorallankardec.com.br
@@ -937,10 +935,7 @@
       <div class="foot-col">
         <span class="titulo">Informações</span>
         <p>Eleições 2026 · Allan Kardec · Deputado Estadual · Podemos (20) · nº 20020.</p>
-        <!-- LEGAL: manter aqui o CNPJ e demais informações exigidas pela Lei 9.504/97 -->
         <p>CNPJ: 68.470.489/0001-07</p>
-        <!-- PRIVACIDADE / FORMULÁRIOS: quando o formulário de escuta for conectado (ver seção "Mato Grosso em pauta"),
-             publicar aqui a política de privacidade e o aviso de uso de dados. Nenhum formulário desta página envia dados hoje. -->
         <p>Os formulários desta página ainda não enviam dados; a política de privacidade será publicada junto com a ativação do canal de escuta.</p>
       </div>
     </div>
@@ -965,13 +960,38 @@
     btnMenu.setAttribute('aria-expanded', 'false');
   }));
 
-  // Newsletter — sem backend: não simula envio bem-sucedido, apenas informa
-  // que o canal ainda não está ativo (INTEGRAÇÃO PENDENTE: apontar para a
-  // plataforma de e-mail marketing da campanha e trocar por confirmação real).
   document.getElementById('news-form').addEventListener('submit', ev => {
     ev.preventDefault();
     document.getElementById('news-status').hidden = false;
   });
+
+  // Revelação ao rolar (fade-up / fade-lateral com stagger por bloco).
+  // As classes são aplicadas via JS: sem JS, todo o conteúdo fica visível.
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const alvos = [
+      ['.hero-txt', 'rv'], ['.hero-figura', 'rv-dir'],
+      ['.escuta-head > *', 'rv'], ['.fluxo-row', 'rv'],
+      ['#pauta .kicker, #pauta h2', 'rv'], ['.tema-row', 'rv'], ['.pauta-apoio', 'rv-dir'],
+      ['.bandeiras-head > *', 'rv'], ['.bandeira', 'rv'],
+      ['#trajetoria .kicker, #trajetoria h2, .trajetoria-nome', 'rv'], ['.arquivo-row', 'rv'],
+      ['#presenca .kicker, #presenca h2', 'rv'], ['.presenca-main', 'rv'], ['.presenca-col figure', 'rv-dir'],
+      ['.bora-grid > div', 'rv'], ['.bora-frame', 'rv-dir'],
+      ['.noticias-head > *', 'rv'], ['.materia-principal', 'rv'], ['.noticia-item', 'rv-dir'],
+      ['.voto-rotulo, #num-final, .voto-base', 'rv'],
+      ['.news-grid > *', 'rv']
+    ];
+    alvos.forEach(([sel, cls]) => document.querySelectorAll(sel).forEach(el => el.classList.add(cls)));
+    const io = new IntersectionObserver(entradas => {
+      entradas.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
+      });
+    }, { threshold: .12, rootMargin: '0px 0px -36px 0px' });
+    document.querySelectorAll('.rv, .rv-dir').forEach(el => {
+      const irmaos = [...el.parentElement.children].filter(c => c.classList.contains('rv') || c.classList.contains('rv-dir'));
+      el.style.transitionDelay = Math.min(irmaos.indexOf(el) * 90, 450) + 'ms';
+      io.observe(el);
+    });
+  }
 </script>
 </body>
 </html>
