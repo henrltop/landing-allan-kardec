@@ -1,0 +1,40 @@
+{% extends "imprensa/base.html" %}
+{% block titulo %}Notícias{% endblock %}
+{% block css %}
+  .n-lista{ margin-top:clamp(32px, 5vw, 56px); }
+  .n-item{
+    display:grid; grid-template-columns:minmax(200px, 300px) 1fr;
+    gap:clamp(20px, 3vw, 40px); align-items:start;
+    border-top:1px solid var(--azul); padding:clamp(24px, 3vw, 40px) 0;
+  }
+  .n-item:last-child{ border-bottom:1px solid var(--azul); }
+  .n-thumb{ aspect-ratio:16/10; overflow:hidden; border:1px solid var(--azul); }
+  .n-thumb img{ width:100%; height:100%; object-fit:cover; }
+  .n-fonte{ font-size:12px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:var(--verde); }
+  .n-item h2{ font-size:clamp(20px, 2.2vw, 26px); font-weight:800; line-height:1.3; letter-spacing:-.01em; margin-top:8px; }
+  .n-item p{ margin-top:10px; font-size:15px; max-width:65ch; }
+  .n-ler{ display:inline-block; margin-top:12px; font-size:14px; font-weight:600; border-bottom:2px solid var(--verde); padding-bottom:2px; transition:color .2s; }
+  a:hover .n-ler{ color:var(--verde); }
+  .n-vazio{ margin-top:40px; border-top:1px solid var(--azul); border-bottom:1px solid var(--azul); padding:40px 0; }
+  @media (max-width:760px){ .n-item{ grid-template-columns:1fr; } }
+{% endblock %}
+{% block conteudo %}
+  <span class="kicker">Notícias</span>
+  <h1>Matérias sobre o Professor Allan Kardec</h1>
+  <p class="apoio">Conteúdos enviados por jornalistas e veículos de imprensa, revisados e publicados pela equipe de comunicação. É jornalista? <a href="{% url 'imprensa:enviar' %}" style="font-weight:600; border-bottom:2px solid var(--verde)">Envie a sua matéria</a>.</p>
+  <div class="n-lista">
+    {% for n in noticias %}
+      <a class="n-item" href="{% url 'imprensa:noticia' n.pk %}">
+        {% if n.imagem %}<div class="n-thumb"><img src="{{ n.imagem.url }}" alt="" loading="lazy"></div>{% endif %}
+        <div>
+          <span class="n-fonte">{{ n.veiculo }} · {{ n.publicado_em|date:"d/m/Y" }}</span>
+          <h2>{{ n.titulo }}</h2>
+          <p>{{ n.texto|truncatewords:38 }}</p>
+          <span class="n-ler">Ler matéria</span>
+        </div>
+      </a>
+    {% empty %}
+      <p class="n-vazio">Ainda não há matérias publicadas. As primeiras aparecem aqui assim que forem revisadas pela equipe.</p>
+    {% endfor %}
+  </div>
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends "imprensa/base.html" %}
+{% block titulo %}Sala de imprensa{% endblock %}
+{% block css %}
+  .f-grid{ margin-top:clamp(32px, 5vw, 56px); display:grid; grid-template-columns:5fr 7fr; gap:clamp(32px, 5vw, 72px); align-items:start; }
+  .f-nota{ font-size:14px; max-width:44ch; }
+  .f-nota strong{ color:var(--verde); }
+  form{ border-top:1px solid var(--azul); padding-top:26px; display:flex; flex-direction:column; gap:18px; }
+  label{ font-size:12px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; display:block; margin-bottom:6px; }
+  input[type=text], input[type=email], input[type=url], textarea{
+    width:100%; min-height:50px; padding:12px 18px;
+    border:1px solid var(--azul); border-radius:2px;
+    font-family:inherit; font-size:15px; color:var(--azul); background:var(--branco);
+  }
+  textarea{ min-height:220px; resize:vertical; }
+  input[type=file]{ font-family:inherit; font-size:14px; }
+  .erros{ color:var(--verde); font-weight:600; font-size:13px; margin-top:6px; }
+  @media (max-width:860px){ .f-grid{ grid-template-columns:1fr; } }
+{% endblock %}
+{% block conteudo %}
+  <span class="kicker">Sala de imprensa</span>
+  <h1>Envie a sua matéria sobre o Professor Allan Kardec</h1>
+  <div class="f-grid">
+    <div class="f-nota">
+      <p>Espaço para jornalistas e veículos de imprensa enviarem matérias, entrevistas e artigos sobre o Professor Allan Kardec.</p>
+      <p style="margin-top:14px"><strong>Como funciona:</strong> o conteúdo enviado passa pela revisão da equipe de comunicação e, aprovado, é publicado na página de notícias com o crédito do veículo e do autor.</p>
+      <p style="margin-top:14px">Os dados de contato são usados apenas para retorno sobre a publicação.</p>
+    </div>
+    <form method="post" enctype="multipart/form-data" novalidate>
+      {% csrf_token %}
+      {{ form.site }}
+      {% if erro_ritmo %}<p class="erros">Aguarde um minuto entre um envio e outro.</p>{% endif %}
+      {% if form.non_field_errors %}<p class="erros">{{ form.non_field_errors|first }}</p>{% endif %}
+      <div>
+        <label for="id_jornalista">Seu nome</label>
+        {{ form.jornalista }}
+        {% if form.jornalista.errors %}<p class="erros">{{ form.jornalista.errors|first }}</p>{% endif %}
+      </div>
+      <div>
+        <label for="id_veiculo">Veículo de imprensa</label>
+        {{ form.veiculo }}
+        {% if form.veiculo.errors %}<p class="erros">{{ form.veiculo.errors|first }}</p>{% endif %}
+      </div>
+      <div>
+        <label for="id_email">E-mail para contato</label>
+        {{ form.email }}
+        {% if form.email.errors %}<p class="erros">{{ form.email.errors|first }}</p>{% endif %}
+      </div>
+      <div>
+        <label for="id_telefone">Telefone (opcional)</label>
+        {{ form.telefone }}
+      </div>
+      <div>
+        <label for="id_titulo">Título da matéria</label>
+        {{ form.titulo }}
+        {% if form.titulo.errors %}<p class="erros">{{ form.titulo.errors|first }}</p>{% endif %}
+      </div>
+      <div>
+        <label for="id_texto">Texto da matéria</label>
+        {{ form.texto }}
+        {% if form.texto.errors %}<p class="erros">{{ form.texto.errors|first }}</p>{% endif %}
+      </div>
+      <div>
+        <label for="id_link">Link da publicação original (opcional)</label>
+        {{ form.link }}
+        {% if form.link.errors %}<p class="erros">{{ form.link.errors|first }}</p>{% endif %}
+      </div>
+      <div>
+        <label for="id_imagem">Imagem (opcional, até 5 MB)</label>
+        {{ form.imagem }}
+        {% if form.imagem.errors %}<p class="erros">{{ form.imagem.errors|first }}</p>{% endif %}
+      </div>
+      <div><button class="btn" type="submit">Enviar para revisão</button></div>
+    </form>
+  </div>
+{% endblock %}

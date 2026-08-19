@@ -1,0 +1,8 @@
+{% extends "imprensa/base.html" %}
+{% block titulo %}Matéria enviada{% endblock %}
+{% block conteudo %}
+  <span class="kicker">Sala de imprensa</span>
+  <h1>Matéria recebida — obrigado!</h1>
+  <p class="apoio">Seu material foi encaminhado para a equipe de comunicação. Depois da revisão, ele é publicado na página de notícias com o crédito do veículo e do autor. Se precisarmos de algum ajuste, entraremos em contato pelo e-mail informado.</p>
+  <p style="margin-top:28px"><a class="btn" href="{% url 'imprensa:noticias' %}">Ver notícias publicadas</a></p>
+{% endblock %}
