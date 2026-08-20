@@ -8,9 +8,15 @@ class Materia(models.Model):
         ("aprovada", "Aprovada e publicada"),
         ("rejeitada", "Rejeitada"),
     ]
-    jornalista = models.CharField("Nome do jornalista", max_length=120)
-    veiculo = models.CharField("Veículo de imprensa", max_length=120)
-    email = models.EmailField("E-mail para contato")
+    TIPOS = [
+        ("equipe", "Produzida pela equipe"),
+        ("imprensa", "Enviada pela imprensa"),
+        ("midia", "Saiu na mídia"),
+    ]
+    tipo = models.CharField("Tipo", max_length=10, choices=TIPOS, default="imprensa")
+    jornalista = models.CharField("Autor / jornalista", max_length=120, blank=True)
+    veiculo = models.CharField("Veículo / fonte", max_length=120)
+    email = models.EmailField("E-mail para contato", blank=True)
     telefone = models.CharField("Telefone (opcional)", max_length=40, blank=True)
     titulo = models.CharField("Título da matéria", max_length=200)
     texto = models.TextField("Texto da matéria")
@@ -27,6 +33,11 @@ class Materia(models.Model):
 
     def __str__(self):
         return f"{self.titulo} ({self.veiculo})"
+
+    def save(self, *args, **kwargs):
+        if self.status == "aprovada" and not self.publicado_em:
+            self.publicado_em = timezone.now()
+        super().save(*args, **kwargs)
 
     def aprovar(self):
         self.status = "aprovada"

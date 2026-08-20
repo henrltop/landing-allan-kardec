@@ -2,16 +2,18 @@
 {% block titulo %}{{ noticia.titulo }}{% endblock %}
 {% block css %}
   .m-fonte{ font-size:12px; font-weight:600; letter-spacing:.2em; text-transform:uppercase; color:var(--verde); }
-  .m-img{ margin-top:28px; border:1px solid var(--azul); }
+  .m-img{ border:1px solid var(--azul); max-width:720px; }
   .m-txt{ margin-top:28px; max-width:70ch; white-space:pre-line; }
   .m-link{ display:inline-block; margin-top:24px; font-weight:600; border-bottom:2px solid var(--verde); padding-bottom:2px; transition:color .2s; }
   .m-link:hover{ color:var(--verde); }
   .m-volta{ display:inline-block; margin-top:36px; font-size:14px; font-weight:600; color:var(--verde); }
 {% endblock %}
-{% block conteudo %}
-  <span class="m-fonte">{{ noticia.veiculo }} · por {{ noticia.jornalista }} · {{ noticia.publicado_em|date:"d/m/Y" }}</span>
+{% block cabecalho %}
+  <span class="m-fonte">{% if noticia.tipo == 'midia' %}Saiu na mídia · {% endif %}{{ noticia.veiculo }}{% if noticia.jornalista %} · por {{ noticia.jornalista }}{% endif %} · {{ noticia.publicado_em|date:"d/m/Y" }}</span>
   <h1>{{ noticia.titulo }}</h1>
-  {% if noticia.imagem %}<img class="m-img" src="{{ noticia.imagem.url }}" alt="">{% endif %}
+{% endblock %}
+{% block conteudo %}
+  {% if noticia.imagem %}<img class="m-img" src="{{ noticia.imagem.url }}" alt="" style="margin-top:0">{% endif %}
   <div class="m-txt">{{ noticia.texto }}</div>
   {% if noticia.link %}<a class="m-link" href="{{ noticia.link }}" rel="noopener">Ver publicação original</a>{% endif %}
   <br><a class="m-volta" href="{% url 'imprensa:noticias' %}">← Todas as notícias</a>

@@ -18,16 +18,18 @@
   .n-vazio{ margin-top:40px; border-top:1px solid var(--azul); border-bottom:1px solid var(--azul); padding:40px 0; }
   @media (max-width:760px){ .n-item{ grid-template-columns:1fr; } }
 {% endblock %}
-{% block conteudo %}
+{% block cabecalho %}
   <span class="kicker">Notícias</span>
   <h1>Matérias sobre o Professor Allan Kardec</h1>
   <p class="apoio">Conteúdos enviados por jornalistas e veículos de imprensa, revisados e publicados pela equipe de comunicação. É jornalista? <a href="{% url 'imprensa:enviar' %}" style="font-weight:600; border-bottom:2px solid var(--verde)">Envie a sua matéria</a>.</p>
-  <div class="n-lista">
+{% endblock %}
+{% block conteudo %}
+  <div class="n-lista" style="margin-top:0">
     {% for n in noticias %}
       <a class="n-item" href="{% url 'imprensa:noticia' n.pk %}">
         {% if n.imagem %}<div class="n-thumb"><img src="{{ n.imagem.url }}" alt="" loading="lazy"></div>{% endif %}
         <div>
-          <span class="n-fonte">{{ n.veiculo }} · {{ n.publicado_em|date:"d/m/Y" }}</span>
+          <span class="n-fonte">{% if n.tipo == 'midia' %}Saiu na mídia · {% endif %}{{ n.veiculo }} · {{ n.publicado_em|date:"d/m/Y" }}</span>
           <h2>{{ n.titulo }}</h2>
           <p>{{ n.texto|truncatewords:38 }}</p>
           <span class="n-ler">Ler matéria</span>

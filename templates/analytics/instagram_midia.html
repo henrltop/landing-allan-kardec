@@ -1,0 +1,87 @@
+{% extends "painel/base.html" %}
+{% load humanize %}
+{% block titulo %}Publicação · Instagram{% endblock %}
+{% block css %}
+  .m-grid{ display:grid; grid-template-columns:280px 1fr; gap:26px; align-items:start; margin-bottom:28px; }
+  .m-thumb{ width:100%; border:1px solid var(--borda); }
+  .m-caption{ background:var(--branco); border:1px solid var(--borda); border-radius:2px; padding:18px 22px; font-size:14px; white-space:pre-line; max-height:280px; overflow:auto; }
+  .ig-cards{ display:grid; grid-template-columns:repeat(6, 1fr); gap:12px; margin-bottom:26px; }
+  .ig-card{ background:var(--branco); border:1px solid var(--borda); border-radius:2px; padding:12px 14px; }
+  .ig-card strong{ font-size:20px; font-weight:800; display:block; }
+  .ig-card span{ font-size:10.5px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--verde); }
+  .grafico{ background:var(--branco); border:1px solid var(--borda); border-radius:2px; padding:18px; margin-bottom:26px; }
+  h2{ font-size:17px; font-weight:800; margin:26px 0 12px; }
+  @media (max-width:900px){ .m-grid{ grid-template-columns:1fr; } .ig-cards{ grid-template-columns:repeat(3, 1fr); } }
+{% endblock %}
+{% block conteudo %}
+  <div class="topo-pagina">
+    <div>
+      <h1>{{ m.caption|truncatechars:80|default:"(sem legenda)" }}</h1>
+      <p class="sub">{{ m.media_product_type|default:m.media_type }} · publicado {{ m.published_at|date:"d/m/Y H:i" }} ·
+        <a href="{{ m.permalink }}" rel="noopener" style="border-bottom:2px solid var(--verde); font-weight:600">abrir no Instagram</a></p>
+    </div>
+    <a class="btn" href="{% url 'analytics:instagram' %}">Voltar</a>
+  </div>
+
+  <div class="m-grid">
+    {% if m.thumbnail_url %}<img class="m-thumb" src="{{ m.thumbnail_url }}" alt="" onerror="this.style.display='none'">{% endif %}
+    <div class="m-caption">{{ m.caption|default:"(sem legenda)" }}</div>
+  </div>
+
+  {% if snap %}
+  <div class="ig-cards">
+    <div class="ig-card"><span>Views</span><strong>{{ snap.views|intcomma|default:"—" }}</strong></div>
+    <div class="ig-card"><span>Alcance</span><strong>{{ snap.reach|intcomma|default:"—" }}</strong></div>
+    <div class="ig-card"><span>Likes</span><strong>{{ snap.likes|intcomma|default:"—" }}</strong></div>
+    <div class="ig-card"><span>Comentários</span><strong>{{ snap.comments|intcomma|default:"—" }}</strong></div>
+    <div class="ig-card"><span>Shares</span><strong>{{ snap.shares|intcomma|default:"—" }}</strong></div>
+    <div class="ig-card"><span>Salvos</span><strong>{{ snap.saved|intcomma|default:"—" }}</strong></div>
+    <div class="ig-card"><span>Reposts</span><strong>{{ snap.reposts|intcomma|default:"—" }}</strong></div>
+    <div class="ig-card"><span>Interações</span><strong>{{ snap.total_interactions|intcomma|default:"—" }}</strong></div>
+    <div class="ig-card"><span>Skip rate (3s)</span><strong>{% if snap.reels_skip_rate is not None %}{{ snap.reels_skip_rate }}%{% else %}—{% endif %}</strong></div>
+    <div class="ig-card"><span>Watch médio</span><strong>{% if derivadas.avg_watch_time_seconds is not None %}{{ derivadas.avg_watch_time_seconds }}s{% else %}—{% endif %}</strong></div>
+    <div class="ig-card"><span>Engaj./alcance</span><strong>{{ derivadas.engagement_by_reach|default:"—" }}</strong></div>
+    <div class="ig-card"><span>Share rate</span><strong>{{ derivadas.share_rate|default:"—" }}</strong></div>
+  </div>
+  {% endif %}
+
+  {% if svg %}
+  <h2>Evolução de views</h2>
+  <div class="grafico">{{ svg|safe }}</div>
+  {% endif %}
+
+  <h2>Marcos temporais</h2>
+  <table>
+    <tr><th>Marco</th><th>Coletado</th><th>Views</th><th>Alcance</th><th>Interações</th><th>Shares</th><th>Reposts</th></tr>
+    {% for rotulo, s in marcos.items %}
+      <tr>
+        <td><strong>{{ rotulo }}</strong></td>
+        {% if s %}
+          <td>{{ s.collected_at|date:"d/m H:i" }}</td>
+          <td>{{ s.views|default:"—" }}</td><td>{{ s.reach|default:"—" }}</td>
+          <td>{{ s.total_interactions|default:"—" }}</td><td>{{ s.shares|default:"—" }}</td><td>{{ s.reposts|default:"—" }}</td>
+        {% else %}
+          <td colspan="6" style="color:#63637A">sem snapshot próximo</td>
+        {% endif %}
+      </tr>
+    {% endfor %}
+  </table>
+
+  <h2>Snapshots ({{ serie|length }})</h2>
+  <table>
+    <tr><th>Coletado</th><th>Horas após publicação</th><th>Views</th><th>Views/h</th><th>Alcance</th><th>Interações</th><th>Inter./h</th><th>Shares</th><th>Reposts</th></tr>
+    {% for p in serie reversed %}
+      <tr>
+        <td>{{ p.collected_at|date:"d/m H:i" }}</td>
+        <td>{{ p.horas_desde_publicacao }}h</td>
+        <td>{{ p.views|default:"—" }}</td>
+        <td>{{ p.views_por_hora|default:"—" }}</td>
+        <td>{{ p.reach|default:"—" }}</td>
+        <td>{{ p.total_interactions|default:"—" }}</td>
+        <td>{{ p.interacoes_por_hora|default:"—" }}</td>
+        <td>{{ p.shares|default:"—" }}</td>
+        <td>{{ p.reposts|default:"—" }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

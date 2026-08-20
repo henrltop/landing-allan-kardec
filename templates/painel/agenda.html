@@ -1,0 +1,126 @@
+{% extends "painel/base.html" %}
+{% block titulo %}Agenda{% endblock %}
+{% block css %}
+  .cal-topo{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:18px; }
+  .cal-nav{ display:flex; align-items:center; gap:8px; }
+  .cal-nav .mes{ font-size:20px; font-weight:800; min-width:200px; text-align:center; text-transform:capitalize; }
+  .cal-nav a.seta{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:40px; height:40px; background:var(--branco);
+    border:1px solid var(--borda); border-radius:2px;
+    font-size:18px; font-weight:700; transition:background-color .2s, color .2s;
+  }
+  .cal-nav a.seta:hover{ background:var(--azul); color:var(--branco); }
+  .cal{
+    background:var(--branco); border:1px solid var(--borda); border-radius:2px;
+    display:grid; grid-template-columns:repeat(7, minmax(0, 1fr)); overflow:hidden;
+  }
+  .cal .dow{
+    font-size:11px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--verde); background:var(--topo-tabela);
+    padding:10px 12px; border-bottom:1px solid var(--azul);
+  }
+  .cal .dia{
+    min-height:118px; padding:8px; border-bottom:1px solid var(--divisor);
+    border-right:1px solid var(--divisor); position:relative;
+  }
+  .cal .dia:nth-child(7n){ border-right:0; }
+  .cal .fora{ background:var(--fundo); }
+  .cal .fora .num{ opacity:.45; }
+  .cal .num{
+    display:inline-flex; align-items:center; justify-content:center;
+    min-width:26px; height:26px; padding:0 6px;
+    font-size:13px; font-weight:700; border-radius:2px;
+    transition:background-color .2s, color .2s;
+  }
+  .cal a.num:hover{ background:var(--azul); color:var(--branco); }
+  .cal a.num:hover::after{ content:" +"; font-weight:800; }
+  .cal .eh-hoje .num{ background:var(--amarelo); color:var(--azul); }
+  .chip{
+    display:block; margin-top:5px; padding:3px 8px;
+    font-size:11.5px; font-weight:600; line-height:1.35;
+    border-radius:2px; border-left:3px solid;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+    transition:filter .15s;
+  }
+  .chip:hover{ filter:brightness(.94); }
+  .chip-agendado{ background:#E3E7FB; border-color:var(--azul); color:var(--azul); }
+  .chip-confirmado{ background:#E0F4D3; border-color:var(--verde); color:#1F5A0A; }
+  .chip-realizado{ background:#FDF2CE; border-color:var(--amarelo); color:#6B5200; }
+  .chip-cancelado{ background:#EDEDF2; border-color:#9A9AAE; color:#63637A; text-decoration:line-through; }
+  .legenda-cal{ display:flex; gap:18px; flex-wrap:wrap; margin-top:14px; font-size:12.5px; font-weight:600; }
+  .legenda-cal span::before{ content:""; display:inline-block; width:12px; height:12px; border-radius:2px; margin-right:6px; vertical-align:-1px; }
+  .lg-agendado::before{ background:#E3E7FB; border-left:3px solid var(--azul); }
+  .lg-confirmado::before{ background:#E0F4D3; border-left:3px solid var(--verde); }
+  .lg-realizado::before{ background:#FDF2CE; border-left:3px solid var(--amarelo); }
+  .lg-cancelado::before{ background:#EDEDF2; border-left:3px solid #9A9AAE; }
+  @media (max-width:860px){
+    .cal{ grid-template-columns:1fr; }
+    .cal .dow{ display:none; }
+    .cal .dia{ border-right:0; min-height:0; }
+    .cal .dia:not(.eh-hoje).fora{ display:none; }
+    .cal .dia.sem-eventos.fora{ display:none; }
+  }
+{% endblock %}
+{% block conteudo %}
+  <div class="topo-pagina">
+    <div><h1>Agenda interna</h1><p class="sub">Compromissos da campanha — clique num dia para agendar, ou numa etiqueta para abrir.</p></div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap">
+      <a class="btn btn-contorno" href="{% url 'painel:agenda' %}?visao={% if visao == 'lista' %}calendario{% else %}lista{% endif %}">
+        {% if visao == 'lista' %}Ver calendário{% else %}Ver em lista{% endif %}
+      </a>
+      <a class="btn btn-verde" href="{% url 'painel:novo' 'agenda' %}">+ Novo compromisso</a>
+    </div>
+  </div>
+
+  {% if visao == 'lista' %}
+    <table>
+      <tr><th>Quando</th><th>Compromisso</th><th>Município / local</th><th>Responsável</th><th>Status</th><th></th></tr>
+      {% for c in itens %}
+        <tr>
+          <td>{{ c.inicio|date:"d/m/Y H:i" }}</td>
+          <td><strong>{{ c.titulo }}</strong>{% if c.descricao %}<br><span style="font-size:12px">{{ c.descricao|truncatewords:14 }}</span>{% endif %}</td>
+          <td>{{ c.municipio }}{% if c.local %} · {{ c.local }}{% endif %}</td>
+          <td>{{ c.responsavel|default:"—" }}</td>
+          <td><span class="tag {% if c.status == 'confirmado' %}tag-verde{% elif c.status == 'realizado' %}tag-amarelo{% endif %}">{{ c.get_status_display }}</span></td>
+          <td><div class="acoes">
+            <a href="{% url 'painel:editar' 'agenda' c.pk %}">Editar</a>
+            <a href="{% url 'painel:excluir' 'agenda' c.pk %}">Excluir</a>
+          </div></td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="6" class="vazio">Nenhum compromisso cadastrado ainda.</td></tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <div class="cal-topo">
+      <div class="cal-nav">
+        <a class="seta" href="?ano={{ anterior.year }}&mes={{ anterior.month }}" aria-label="Mês anterior">‹</a>
+        <span class="mes">{{ primeiro|date:"F Y" }}</span>
+        <a class="seta" href="?ano={{ proximo.year }}&mes={{ proximo.month }}" aria-label="Próximo mês">›</a>
+      </div>
+      <a class="btn btn-contorno" href="{% url 'painel:agenda' %}">Hoje</a>
+    </div>
+    <div class="cal">
+      <div class="dow">Dom</div><div class="dow">Seg</div><div class="dow">Ter</div><div class="dow">Qua</div><div class="dow">Qui</div><div class="dow">Sex</div><div class="dow">Sáb</div>
+      {% for semana in semanas %}
+        {% for d in semana %}
+          <div class="dia {% if not d.no_mes %}fora{% endif %} {% if d.hoje %}eh-hoje{% endif %} {% if not d.eventos %}sem-eventos{% endif %}">
+            <a class="num" href="{% url 'painel:novo' 'agenda' %}?inicio={{ d.dia|date:'Y-m-d' }}T09:00" title="Agendar em {{ d.dia|date:'d/m' }}">{{ d.dia.day }}</a>
+            {% for e in d.eventos %}
+              <a class="chip chip-{{ e.status }}" href="{% url 'painel:editar' 'agenda' e.pk %}" title="{{ e.inicio|date:'H:i' }} · {{ e.titulo }} ({{ e.get_status_display }})">
+                {{ e.inicio|date:"H:i" }} {{ e.titulo }}
+              </a>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      {% endfor %}
+    </div>
+    <div class="legenda-cal">
+      <span class="lg-agendado">Agendado</span>
+      <span class="lg-confirmado">Confirmado</span>
+      <span class="lg-realizado">Realizado</span>
+      <span class="lg-cancelado">Cancelado</span>
+    </div>
+  {% endif %}
+{% endblock %}

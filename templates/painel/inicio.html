@@ -1,0 +1,53 @@
+{% extends "painel/base.html" %}
+{% block titulo %}Início{% endblock %}
+{% block css %}
+  .cards{ display:grid; grid-template-columns:repeat(3, 1fr); gap:18px; margin-bottom:40px; }
+  .card{ background:var(--branco); border:1px solid var(--borda); border-radius:2px; padding:22px; border-top:4px solid var(--verde); }
+  .card:nth-child(2){ border-top-color:var(--amarelo); }
+  .card:nth-child(3){ border-top-color:var(--azul); }
+  .card strong{ font-size:36px; font-weight:800; line-height:1; }
+  .card span{ display:block; font-size:12px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--verde); margin-top:8px; }
+  h2{ font-size:18px; font-weight:800; margin-bottom:14px; }
+  @media (max-width:760px){ .cards{ grid-template-columns:1fr; } }
+{% endblock %}
+{% block conteudo %}
+  <div class="topo-pagina">
+    <div><h1>Bom trabalho, {{ user.username }}!</h1>
+    <p class="sub">Resumo do que está em aberto na campanha.</p></div>
+  </div>
+  <div class="cards">
+    <a class="card" href="{% url 'painel:liderancas' %}"><strong>{{ n_liderancas }}</strong><span>Lideranças cadastradas</span></a>
+    <a class="card" href="{% url 'painel:agenda' %}"><strong>{{ n_compromissos }}</strong><span>Compromissos em aberto</span></a>
+    <a class="card" href="{% url 'painel:demandas' %}"><strong>{{ n_demandas_abertas }}</strong><span>Demandas sem resposta</span></a>
+  </div>
+
+  <h2>Matérias aguardando revisão</h2>
+  <table>
+    <tr><th>Enviada em</th><th>Título</th><th>Veículo</th><th></th></tr>
+    {% for m in materias_pendentes %}
+      <tr>
+        <td>{{ m.criado_em|date:"d/m H:i" }}</td>
+        <td><strong>{{ m.titulo }}</strong></td>
+        <td>{{ m.veiculo }}</td>
+        <td><div class="acoes"><a href="{% url 'painel:materia' m.pk %}">Revisar</a></div></td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="4" class="vazio">Nenhuma matéria pendente.</td></tr>
+    {% endfor %}
+  </table>
+
+  <h2 style="margin-top:40px">Próximos compromissos</h2>
+  <table>
+    <tr><th>Quando</th><th>Compromisso</th><th>Município</th><th>Status</th></tr>
+    {% for c in proximos %}
+      <tr>
+        <td>{{ c.inicio|date:"d/m H:i" }}</td>
+        <td><strong>{{ c.titulo }}</strong>{% if c.local %} · {{ c.local }}{% endif %}</td>
+        <td>{{ c.municipio }}</td>
+        <td><span class="tag {% if c.status == 'confirmado' %}tag-verde{% endif %}">{{ c.get_status_display }}</span></td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="4" class="vazio">Nenhum compromisso em aberto.</td></tr>
+    {% endfor %}
+  </table>
+{% endblock %}

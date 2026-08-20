@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  body{
+    font-family:'Poppins','Segoe UI','Segoe UI Emoji','Noto Color Emoji',sans-serif;
+    font-size:10.5pt; color:#10123B; line-height:1.6;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  h1.titulo{ color:#070FB5; font-size:20pt; font-weight:800; letter-spacing:-.01em; line-height:1.2; }
+  .cinta{
+    color:#51BC24; font-size:7.5pt; font-weight:600; letter-spacing:.24em;
+    text-transform:uppercase; margin:6pt 0 14pt;
+  }
+  .meta{
+    display:grid; grid-template-columns:repeat(4, 1fr);
+    border:1.5pt solid #070FB5; border-radius:2pt; margin-bottom:18pt;
+  }
+  .meta div{ padding:8pt 10pt; border-right:1pt solid #C9CFEE; }
+  .meta div:last-child{ border-right:0; }
+  .meta strong{
+    display:block; color:#51BC24; font-size:6.5pt; font-weight:700;
+    letter-spacing:.14em; text-transform:uppercase; margin-bottom:2pt;
+  }
+  .meta span{ font-size:9pt; font-weight:600; }
+
+  .md h1{ color:#070FB5; font-size:15pt; font-weight:800; margin:16pt 0 6pt; }
+  .md h2{
+    color:#070FB5; font-size:13pt; font-weight:800; margin:15pt 0 6pt;
+    border-bottom:1.5pt solid #C9CFEE; padding-bottom:3pt;
+    break-after:avoid;
+  }
+  .md h3{ color:#070FB5; font-size:11pt; font-weight:700; margin:12pt 0 4pt; break-after:avoid; }
+  .md p{ margin:6pt 0; }
+  .md ul, .md ol{ margin:6pt 0 6pt 16pt; }
+  .md li{ margin:3pt 0; }
+  .md strong{ font-weight:700; }
+  .md hr{ border:0; border-top:1pt solid #C9CFEE; margin:14pt 0; }
+  .md blockquote{ border-left:3pt solid #51BC24; padding-left:12pt; margin:10pt 0; color:#4A4D7A; }
+  .md code{ background:#EDF0FA; padding:1pt 5pt; border-radius:2pt; font-size:9pt; }
+
+  .md table{
+    width:100%; border-collapse:collapse; margin:10pt 0;
+    font-size:8.5pt; break-inside:auto;
+  }
+  .md thead{ display:table-header-group; }  /* repete o cabeçalho a cada página */
+  .md tr{ break-inside:avoid; }
+  .md th{
+    background:#EDF0FA; color:#070FB5; font-weight:700;
+    border:1pt solid #9FA8DF; padding:5pt 7pt; text-align:left;
+  }
+  .md td{ border:1pt solid #C9CFEE; padding:5pt 7pt; vertical-align:top; }
+  .md tbody tr:nth-child(even) td{ background:#F7F8FD; }
+</style>
+</head>
+<body>
+  <h1 class="titulo">{{ r.titulo }}</h1>
+  <div class="cinta">Professor Allan Kardec · 20020 · Relatório interno — uso restrito da equipe</div>
+  <div class="meta">
+    <div><strong>Período analisado</strong><span>{{ r.periodo_inicio|date:"d/m/Y" }} – {{ r.periodo_fim|date:"d/m/Y" }}</span></div>
+    <div><strong>Dados coletados em</strong><span>{{ r.dados_coletados_em|date:"d/m/Y H:i" }}</span></div>
+    <div><strong>Relatório criado em</strong><span>{{ r.criado_em|date:"d/m/Y H:i" }}</span></div>
+    <div><strong>Autor</strong><span>{{ r.autor.username|default:"—" }}</span></div>
+  </div>
+  <div class="md">{{ html|safe }}</div>
+</body>
+</html>

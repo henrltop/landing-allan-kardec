@@ -1,0 +1,45 @@
+{% extends "painel/base.html" %}
+{% block titulo %}{{ r.titulo }}{% endblock %}
+{% block css %}
+  .r-meta{ background:var(--branco); border:1px solid var(--borda); border-radius:2px;
+           padding:14px 20px; margin-bottom:24px; font-size:13.5px;
+           display:flex; gap:26px; flex-wrap:wrap; }
+  .r-meta strong{ color:var(--verde); font-size:11px; font-weight:700;
+                  letter-spacing:.14em; text-transform:uppercase; display:block; }
+  .md{ background:var(--branco); border:1px solid var(--borda); border-radius:2px;
+       padding:34px 40px; max-width:900px; line-height:1.75; font-size:15px; }
+  .md h1, .md h2, .md h3{ font-weight:800; letter-spacing:-.01em; margin:26px 0 10px; line-height:1.25; }
+  .md h1{ font-size:26px; } .md h2{ font-size:21px; } .md h3{ font-size:17px; }
+  .md h1:first-child, .md h2:first-child{ margin-top:0; }
+  .md p{ margin:10px 0; }
+  .md ul, .md ol{ margin:10px 0 10px 26px; }
+  .md ul{ list-style:disc; } .md ol{ list-style:decimal; }
+  .md li{ margin:4px 0; }
+  .md table{ width:auto; min-width:60%; border-collapse:collapse; margin:16px 0;
+             border:1px solid var(--borda); }
+  .md th{ background:var(--topo-tabela); border:1px solid var(--borda); padding:8px 14px;
+          font-size:12px; letter-spacing:.06em; text-transform:none; color:var(--azul); }
+  .md td{ border:1px solid var(--divisor); padding:8px 14px; font-size:13.5px; }
+  .md strong{ font-weight:700; }
+  .md hr{ border:0; border-top:1px solid var(--divisor); margin:22px 0; }
+  .md blockquote{ border-left:3px solid var(--verde); padding-left:16px; margin:14px 0; }
+  .md code{ background:var(--fundo); padding:2px 6px; border-radius:2px; font-size:13px; }
+{% endblock %}
+{% block conteudo %}
+  <div class="topo-pagina">
+    <div><h1>{{ r.titulo }}</h1>
+      <p class="sub"><span class="tag">Interno — restrito à equipe</span></p></div>
+    <div style="display:flex; gap:10px">
+      <a class="btn btn-verde" href="{% url 'analytics:relatorio_pdf' r.pk %}">Baixar PDF</a>
+      <a class="btn btn-contorno" href="{% url 'analytics:relatorio_editar' r.pk %}">Editar</a>
+      <a class="btn" href="{% url 'analytics:relatorios' %}">Voltar</a>
+    </div>
+  </div>
+  <div class="r-meta">
+    <span><strong>Período analisado</strong>{{ r.periodo_inicio|date:"d/m/Y" }} – {{ r.periodo_fim|date:"d/m/Y" }}</span>
+    <span><strong>Dados coletados em</strong>{{ r.dados_coletados_em|date:"d/m/Y H:i" }}</span>
+    <span><strong>Relatório criado em</strong>{{ r.criado_em|date:"d/m/Y H:i" }}</span>
+    <span><strong>Autor</strong>{{ r.autor.username|default:"—" }}</span>
+  </div>
+  <div class="md">{{ html|safe }}</div>
+{% endblock %}

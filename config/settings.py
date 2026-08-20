@@ -9,6 +9,16 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Carrega BASE_DIR/.env se existir (sem sobrescrever variáveis já definidas
+# no ambiente — em produção o systemd/cron injeta direto).
+_env = BASE_DIR / ".env"
+if _env.exists():
+    for _linha in _env.read_text(encoding="utf-8-sig").splitlines():
+        _linha = _linha.strip()
+        if _linha and not _linha.startswith("#") and "=" in _linha:
+            _k, _v = _linha.split("=", 1)
+            os.environ.setdefault(_k.strip(), _v.strip())
+
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "dev-only-insecure-key")
 DEBUG = os.environ.get("DJANGO_DEBUG", "1") == "1"
 
@@ -34,8 +44,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.humanize",
     "painel",
     "imprensa",
+    "analytics",
 ]
 
 MIDDLEWARE = [
@@ -100,6 +112,17 @@ MEDIA_URL = "/media/"
 MEDIA_ROOT = DATA_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# ---- Meta Graph API (Instagram Analytics) ----
+# O token é confidencial: nunca logar, expor em endpoint ou enviar ao frontend.
+META_GRAPH_API_VERSION = os.environ.get("META_GRAPH_API_VERSION", "v26.0")
+META_PAGE_ACCESS_TOKEN = os.environ.get("META_PAGE_ACCESS_TOKEN", "")
+INSTAGRAM_ACCOUNT_ID = os.environ.get("INSTAGRAM_ACCOUNT_ID", "")
+META_PAGE_ID = os.environ.get("META_PAGE_ID", "")
+
+LOGIN_URL = "painel:entrar"
+LOGIN_REDIRECT_URL = "painel:inicio"
+LOGOUT_REDIRECT_URL = "painel:entrar"
 
 if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")

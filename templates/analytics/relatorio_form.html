@@ -1,0 +1,46 @@
+{% extends "painel/base.html" %}
+{% block titulo %}{% if obj %}Editar{% else %}Novo{% endif %} relatório{% endblock %}
+{% block css %}
+  .linha2{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; }
+  @media (max-width:800px){ .linha2{ grid-template-columns:1fr; } }
+{% endblock %}
+{% block conteudo %}
+  <div style="max-width:860px">
+    <div class="topo-pagina"><h1>{% if obj %}Editar relatório{% else %}Novo relatório de análise{% endif %}</h1></div>
+    <form method="post" class="bloco">
+      {% csrf_token %}
+      <div class="campo">
+        <label for="id_titulo">{{ form.titulo.label }}</label>
+        {{ form.titulo }}
+        {% if form.titulo.errors %}<p class="erros">{{ form.titulo.errors|first }}</p>{% endif %}
+      </div>
+      <div class="linha2">
+        <div class="campo">
+          <label for="id_periodo_inicio">{{ form.periodo_inicio.label }}</label>
+          {{ form.periodo_inicio }}
+          {% if form.periodo_inicio.errors %}<p class="erros">{{ form.periodo_inicio.errors|first }}</p>{% endif %}
+        </div>
+        <div class="campo">
+          <label for="id_periodo_fim">{{ form.periodo_fim.label }}</label>
+          {{ form.periodo_fim }}
+          {% if form.periodo_fim.errors %}<p class="erros">{{ form.periodo_fim.errors|first }}</p>{% endif %}
+        </div>
+        <div class="campo">
+          <label for="id_dados_coletados_em">{{ form.dados_coletados_em.label }}</label>
+          {{ form.dados_coletados_em }}
+          <p style="font-size:12px; margin-top:4px">{{ form.dados_coletados_em.help_text }}</p>
+          {% if form.dados_coletados_em.errors %}<p class="erros">{{ form.dados_coletados_em.errors|first }}</p>{% endif %}
+        </div>
+      </div>
+      <div class="campo">
+        <label for="id_corpo_markdown">{{ form.corpo_markdown.label }}</label>
+        {{ form.corpo_markdown }}
+        {% if form.corpo_markdown.errors %}<p class="erros">{{ form.corpo_markdown.errors|first }}</p>{% endif %}
+      </div>
+      <div style="display:flex; gap:12px">
+        <button class="btn btn-verde" type="submit">Salvar relatório</button>
+        <a class="btn btn-contorno" href="{% url 'analytics:relatorios' %}">Cancelar</a>
+      </div>
+    </form>
+  </div>
+{% endblock %}

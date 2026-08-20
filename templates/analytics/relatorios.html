@@ -1,0 +1,28 @@
+{% extends "painel/base.html" %}
+{% block titulo %}Relatórios{% endblock %}
+{% block conteudo %}
+  <div class="topo-pagina">
+    <div><h1>Relatórios de análise</h1>
+      <p class="sub">Análises de métricas geradas com IA — cada relatório registra o período avaliado e o momento exato da coleta dos números.</p></div>
+    <a class="btn btn-verde" href="{% url 'analytics:relatorio_novo' %}">+ Novo relatório</a>
+  </div>
+  <table>
+    <tr><th>Criado</th><th>Título</th><th>Período analisado</th><th>Dados coletados em</th><th>Autor</th><th></th></tr>
+    {% for r in itens %}
+      <tr>
+        <td>{{ r.criado_em|date:"d/m/Y H:i" }}</td>
+        <td><a href="{% url 'analytics:relatorio' r.pk %}" style="font-weight:700">{{ r.titulo }}</a></td>
+        <td>{{ r.periodo_inicio|date:"d/m/Y" }} – {{ r.periodo_fim|date:"d/m/Y" }}</td>
+        <td>{{ r.dados_coletados_em|date:"d/m/Y H:i" }}</td>
+        <td>{{ r.autor.username|default:"—" }}</td>
+        <td><div class="acoes">
+          <a href="{% url 'analytics:relatorio_pdf' r.pk %}">PDF</a>
+          <a href="{% url 'analytics:relatorio_editar' r.pk %}">Editar</a>
+          <a href="{% url 'analytics:relatorio_excluir' r.pk %}">Excluir</a>
+        </div></td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="6" class="vazio">Nenhum relatório ainda. Exporte o CSV no Instagram Analytics, gere a análise no Claude e cole aqui.</td></tr>
+    {% endfor %}
+  </table>
+{% endblock %}

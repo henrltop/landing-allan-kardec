@@ -1,0 +1,33 @@
+{% extends "painel/base.html" %}
+{% block titulo %}Demandas{% endblock %}
+{% block conteudo %}
+  <div class="topo-pagina">
+    <div><h1>Demandas da escuta</h1><p class="sub">O que a população trouxe, por tema e município.</p></div>
+    <a class="btn btn-verde" href="{% url 'painel:novo' 'demandas' %}">+ Registrar demanda</a>
+  </div>
+  <div class="filtros">
+    <a href="{% url 'painel:demandas' %}" {% if not status %}class="ativo"{% endif %}>Todas</a>
+    {% for valor, rotulo in STATUS %}
+      <a href="?status={{ valor }}" {% if status == valor %}class="ativo"{% endif %}>{{ rotulo }}</a>
+    {% endfor %}
+  </div>
+  <table>
+    <tr><th>Registrada</th><th>Tema</th><th>Município</th><th>Demanda</th><th>Origem</th><th>Status</th><th></th></tr>
+    {% for d in itens %}
+      <tr>
+        <td>{{ d.criado_em|date:"d/m/Y" }}</td>
+        <td>{{ d.get_tema_display }}</td>
+        <td>{{ d.municipio }}</td>
+        <td>{{ d.descricao|truncatewords:16 }}{% if d.nome_contato %}<br><span style="font-size:12px">{{ d.nome_contato }}{% if d.contato %} · {{ d.contato }}{% endif %}</span>{% endif %}</td>
+        <td>{{ d.get_origem_display }}</td>
+        <td><span class="tag {% if d.status == 'respondida' %}tag-verde{% elif d.status == 'analise' %}tag-amarelo{% endif %}">{{ d.get_status_display }}</span></td>
+        <td><div class="acoes">
+          <a href="{% url 'painel:editar' 'demandas' d.pk %}">Abrir</a>
+          <a href="{% url 'painel:excluir' 'demandas' d.pk %}">Excluir</a>
+        </div></td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="7" class="vazio">Nenhuma demanda {% if status %}nesse status{% else %}registrada ainda{% endif %}.</td></tr>
+    {% endfor %}
+  </table>
+{% endblock %}

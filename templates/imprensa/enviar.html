@@ -16,10 +16,12 @@
   .erros{ color:var(--verde); font-weight:600; font-size:13px; margin-top:6px; }
   @media (max-width:860px){ .f-grid{ grid-template-columns:1fr; } }
 {% endblock %}
-{% block conteudo %}
+{% block cabecalho %}
   <span class="kicker">Sala de imprensa</span>
   <h1>Envie a sua matéria sobre o Professor Allan Kardec</h1>
-  <div class="f-grid">
+{% endblock %}
+{% block conteudo %}
+  <div class="f-grid" style="margin-top:0">
     <div class="f-nota">
       <p>Espaço para jornalistas e veículos de imprensa enviarem matérias, entrevistas e artigos sobre o Professor Allan Kardec.</p>
       <p style="margin-top:14px"><strong>Como funciona:</strong> o conteúdo enviado passa pela revisão da equipe de comunicação e, aprovado, é publicado na página de notícias com o crédito do veículo e do autor.</p>

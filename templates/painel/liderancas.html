@@ -1,0 +1,29 @@
+{% extends "painel/base.html" %}
+{% block titulo %}Lideranças{% endblock %}
+{% block conteudo %}
+  <div class="topo-pagina">
+    <div><h1>Lideranças</h1><p class="sub">Contatos e apoios por município.</p></div>
+    <a class="btn btn-verde" href="{% url 'painel:novo' 'liderancas' %}">+ Cadastrar liderança</a>
+  </div>
+  <form class="busca" method="get">
+    <input type="search" name="q" value="{{ q }}" placeholder="Buscar por nome, município ou função">
+    <button class="btn btn-contorno" type="submit">Buscar</button>
+  </form>
+  <table>
+    <tr><th>Nome</th><th>Município</th><th>Função</th><th>Contato</th><th></th></tr>
+    {% for l in itens %}
+      <tr>
+        <td><strong>{{ l.nome }}</strong>{% if l.observacoes %}<br><span style="font-size:12px">{{ l.observacoes|truncatewords:14 }}</span>{% endif %}</td>
+        <td>{{ l.municipio }}</td>
+        <td>{{ l.funcao|default:"—" }}</td>
+        <td>{{ l.telefone|default:"—" }}{% if l.email %}<br>{{ l.email }}{% endif %}</td>
+        <td><div class="acoes">
+          <a href="{% url 'painel:editar' 'liderancas' l.pk %}">Editar</a>
+          <a href="{% url 'painel:excluir' 'liderancas' l.pk %}">Excluir</a>
+        </div></td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="5" class="vazio">{% if q %}Nada encontrado para “{{ q }}”.{% else %}Nenhuma liderança cadastrada ainda.{% endif %}</td></tr>
+    {% endfor %}
+  </table>
+{% endblock %}

@@ -31,7 +31,7 @@ def materia_enviada(request):
 
 
 def lista_noticias(request):
-    noticias = Materia.objects.filter(status="aprovada")
+    noticias = Materia.objects.filter(status="aprovada").order_by("-publicado_em")
     return render(request, "imprensa/noticias.html", {"noticias": noticias})
 
 

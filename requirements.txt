@@ -2,3 +2,7 @@ Django>=5.1,<6
 Pillow>=10
 whitenoise>=6.6
 gunicorn>=22
+requests>=2.31
+Markdown>=3.5
+xhtml2pdf>=0.2.15
+playwright>=1.45

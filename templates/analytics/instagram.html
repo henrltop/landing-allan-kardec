@@ -1,0 +1,150 @@
+{% extends "painel/base.html" %}
+{% load humanize %}
+{% block titulo %}Instagram Analytics{% endblock %}
+{% block css %}
+  .ig-cards{ display:grid; grid-template-columns:repeat(5, 1fr); gap:14px; margin-bottom:30px; }
+  .ig-card{ background:var(--branco); border:1px solid var(--borda); border-radius:2px; padding:16px 18px; }
+  .ig-card strong{ font-size:26px; font-weight:800; line-height:1.1; display:block; }
+  .ig-card span{ font-size:11px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--verde); }
+  .ig-card .delta{ font-size:12px; font-weight:600; color:var(--azul); }
+  .thumb{ width:64px; height:64px; object-fit:cover; border:1px solid var(--borda); }
+  .filtro-form{ display:flex; gap:10px; flex-wrap:wrap; align-items:end; margin-bottom:20px; }
+  .filtro-form label{ margin-bottom:4px; }
+  .filtro-form input, .filtro-form select{ min-height:42px; width:auto; }
+  .exec{ font-size:12.5px; margin-bottom:18px; }
+  .exec .tag{ margin-left:6px; }
+  @media (max-width:1000px){ .ig-cards{ grid-template-columns:repeat(2, 1fr); } }
+{% endblock %}
+{% block conteudo %}
+  <div class="topo-pagina">
+    <div><h1>Instagram Analytics</h1>
+      <p class="sub">{% if perfil %}@{{ perfil.username }} · dados coletados via Meta Graph API{% else %}Nenhuma coleta ainda — rode <code>python manage.py instagram_sync --since AAAA-MM-DD</code>.{% endif %}</p>
+    </div>
+    <form method="post" action="{% url 'analytics:sincronizar' %}"
+          onsubmit="this.querySelector('button').disabled = true; this.querySelector('button').textContent = 'Coletando… (pode levar ~1 min)';">
+      {% csrf_token %}
+      <button class="btn btn-verde" type="submit">Atualizar agora</button>
+    </form>
+  </div>
+
+  {% if messages %}
+    {% for msg in messages %}
+      <p class="bloco" style="margin-bottom:18px; font-size:14px; font-weight:600; border-left:4px solid {% if msg.tags == 'success' %}var(--verde){% elif msg.tags == 'error' %}var(--amarelo){% else %}var(--azul){% endif %}">{{ msg }}</p>
+    {% endfor %}
+  {% endif %}
+
+  <details class="bloco" style="margin-bottom:22px">
+    <summary style="cursor:pointer; font-weight:700; font-size:15px">Exportar dados (CSV / JSON)</summary>
+    <form method="get" action="{% url 'analytics:api_export' %}"
+          style="display:flex; gap:14px; flex-wrap:wrap; align-items:end; margin-top:18px">
+      <div>
+        <label for="e-dataset">Conjunto de dados</label>
+        <select id="e-dataset" name="dataset" style="width:auto; min-height:42px">
+          <option value="tudo">Relatório completo — tudo num arquivo só (JSON)</option>
+          <option value="midias">Publicações (feed e reels)</option>
+          <option value="stories">Stories</option>
+          <option value="diario">Conta por dia (novos seguidores e alcance)</option>
+          <option value="perfil">Histórico de seguidores (snapshots)</option>
+        </select>
+      </div>
+      <div>
+        <label for="e-modo">Modo</label>
+        <select id="e-modo" name="modo" style="width:auto; min-height:42px">
+          <option value="atual">Atual — últimos números</option>
+          <option value="periodo">Período — estado naquele intervalo</option>
+        </select>
+      </div>
+      <div>
+        <label for="e-inicio">Início do período</label>
+        <input id="e-inicio" type="datetime-local" name="periodo_inicio" style="width:auto; min-height:42px">
+      </div>
+      <div>
+        <label for="e-fim">Fim do período</label>
+        <input id="e-fim" type="datetime-local" name="periodo_fim" style="width:auto; min-height:42px">
+      </div>
+      <div>
+        <label for="e-formato">Formato</label>
+        <select id="e-formato" name="formato" style="width:auto; min-height:42px">
+          <option value="csv">CSV</option>
+          <option value="json">JSON</option>
+        </select>
+      </div>
+      <input type="hidden" name="tipo" value="{{ filtros.tipo }}">
+      <button class="btn btn-verde" type="submit">Exportar</button>
+      <p style="flex-basis:100%; font-size:12px; margin:4px 0 0">
+        No modo <strong>Período</strong>, as publicações/stories consideradas são as publicadas no intervalo,
+        e as métricas refletem o último snapshot coletado <strong>até o fim do período</strong> —
+        útil para ver "como estavam os números ontem". Início/fim vazios = sem limite.
+      </p>
+    </form>
+  </details>
+
+  {% if ultima_execucao %}
+    <p class="exec">Última coleta: {{ ultima_execucao.started_at|date:"d/m H:i" }}
+      <span class="tag {% if ultima_execucao.status == 'sucesso' %}tag-verde{% elif ultima_execucao.status == 'erro' %}tag-amarelo{% endif %}">{{ ultima_execucao.get_status_display }}</span>
+      · {{ ultima_execucao.snapshots_created }} snapshots · {{ ultima_execucao.requests_made }} requests · {{ ultima_execucao.errors_count }} erros
+    </p>
+  {% endif %}
+
+  {% if perfil %}
+  <div class="ig-cards">
+    <div class="ig-card"><span>Seguidores</span><strong>{{ perfil.followers_count|intcomma }}</strong>
+      <span class="delta">{% if cresc_dia >= 0 %}+{% endif %}{{ cresc_dia }} hoje · {% if cresc_semana >= 0 %}+{% endif %}{{ cresc_semana }} na semana</span></div>
+    <div class="ig-card"><span>Conteúdos (filtro)</span><strong>{{ totais.conteudos|intcomma }}</strong></div>
+    <div class="ig-card"><span>Views</span><strong>{{ totais.views|intcomma }}</strong></div>
+    <div class="ig-card"><span>Alcance</span><strong>{{ totais.reach|intcomma }}</strong></div>
+    <div class="ig-card"><span>Interações</span><strong>{{ totais.interacoes|intcomma }}</strong></div>
+    <div class="ig-card"><span>Shares</span><strong>{{ totais.shares|intcomma }}</strong></div>
+    <div class="ig-card"><span>Reposts</span><strong>{{ totais.reposts|intcomma }}</strong></div>
+    <div class="ig-card"><span>Comentários</span><strong>{{ totais.comments|intcomma }}</strong></div>
+  </div>
+  {% endif %}
+
+  <form class="filtro-form" method="get">
+    <div><label for="f-inicio">De</label><input id="f-inicio" type="date" name="inicio" value="{{ filtros.inicio }}"></div>
+    <div><label for="f-fim">Até</label><input id="f-fim" type="date" name="fim" value="{{ filtros.fim }}"></div>
+    <div><label for="f-tipo">Tipo</label>
+      <select id="f-tipo" name="tipo">
+        <option value="">Todos</option>
+        <option value="REELS" {% if filtros.tipo == 'REELS' %}selected{% endif %}>Reels</option>
+        <option value="FEED" {% if filtros.tipo == 'FEED' %}selected{% endif %}>Feed</option>
+        <option value="IMAGE" {% if filtros.tipo == 'IMAGE' %}selected{% endif %}>Imagem</option>
+        <option value="VIDEO" {% if filtros.tipo == 'VIDEO' %}selected{% endif %}>Vídeo</option>
+        <option value="CAROUSEL_ALBUM" {% if filtros.tipo == 'CAROUSEL_ALBUM' %}selected{% endif %}>Carrossel</option>
+      </select>
+    </div>
+    <input type="hidden" name="ordem" value="{{ ordem }}">
+    <button class="btn btn-contorno" type="submit">Filtrar</button>
+  </form>
+
+  <div class="filtros">
+    {% for valor, rotulo in ordenacoes %}
+      <a href="?ordem={{ valor }}&inicio={{ filtros.inicio }}&fim={{ filtros.fim }}&tipo={{ filtros.tipo }}"
+         {% if ordem == valor %}class="ativo"{% endif %}>{{ rotulo }}</a>
+    {% endfor %}
+  </div>
+
+  <table>
+    <tr><th></th><th>Publicação</th><th>Tipo</th><th>Views</th><th>Alcance</th><th>Interações</th><th>Shares</th><th>Reposts</th><th>Coment.</th><th>Skip</th><th>Watch</th></tr>
+    {% for m in ranking %}
+      <tr>
+        <td>{% if m.thumbnail_url %}<img class="thumb" src="{{ m.thumbnail_url }}" alt="" loading="lazy" onerror="this.style.display='none'">{% endif %}</td>
+        <td style="max-width:320px">
+          <a href="{% url 'analytics:midia' m.pk %}" style="font-weight:700">{{ m.caption|truncatechars:70|default:"(sem legenda)" }}</a>
+          <br><span style="font-size:12px">{{ m.published_at|date:"d/m/Y H:i" }} · <a href="{{ m.permalink }}" rel="noopener" style="border-bottom:1px solid var(--verde)">abrir no Instagram</a></span>
+        </td>
+        <td>{{ m.media_product_type|default:m.media_type }}</td>
+        <td>{{ m.snap.views|intcomma|default:"—" }}</td>
+        <td>{{ m.snap.reach|intcomma|default:"—" }}</td>
+        <td>{{ m.snap.total_interactions|intcomma|default:"—" }}</td>
+        <td>{{ m.snap.shares|intcomma|default:"—" }}</td>
+        <td>{{ m.snap.reposts|intcomma|default:"—" }}</td>
+        <td>{{ m.snap.comments|intcomma|default:"—" }}</td>
+        <td>{% if m.snap.reels_skip_rate is not None %}{{ m.snap.reels_skip_rate }}%{% else %}—{% endif %}</td>
+        <td>{% if m.snap.avg_watch_time_ms is not None %}{{ m.snap.avg_watch_time_ms }}ms{% else %}—{% endif %}</td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="11" class="vazio">Nenhuma publicação com métricas no filtro atual.</td></tr>
+    {% endfor %}
+  </table>
+{% endblock %}

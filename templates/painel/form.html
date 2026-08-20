@@ -1,0 +1,22 @@
+{% extends "painel/base.html" %}
+{% block titulo %}{{ titulo }}{% endblock %}
+{% block conteudo %}
+  <div style="max-width:640px">
+    <div class="topo-pagina"><h1>{{ titulo }}</h1></div>
+    <form method="post" enctype="multipart/form-data" class="bloco">
+      {% csrf_token %}
+      {% for campo in form %}
+        <div class="campo">
+          <label for="{{ campo.id_for_label }}">{{ campo.label }}</label>
+          {{ campo }}
+          {% if campo.help_text %}<p style="font-size:12px; margin-top:4px">{{ campo.help_text }}</p>{% endif %}
+          {% if campo.errors %}<p class="erros">{{ campo.errors|first }}</p>{% endif %}
+        </div>
+      {% endfor %}
+      <div style="display:flex; gap:12px; margin-top:8px">
+        <button class="btn btn-verde" type="submit">Salvar</button>
+        <a class="btn btn-contorno" href="{% url 'painel:'|add:voltar %}">Cancelar</a>
+      </div>
+    </form>
+  </div>
+{% endblock %}

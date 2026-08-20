@@ -1,0 +1,15 @@
+{% extends "painel/base.html" %}
+{% block titulo %}Excluir{% endblock %}
+{% block conteudo %}
+  <div style="max-width:560px">
+    <div class="topo-pagina"><h1>Excluir {{ rotulo|lower }}?</h1></div>
+    <p class="bloco" style="margin-bottom:24px"><strong>{{ obj }}</strong></p>
+    <p style="margin-bottom:24px">Essa ação não pode ser desfeita.</p>
+    <form method="post" style="display:flex; gap:12px">
+      {% csrf_token %}
+      <button class="btn" type="submit" style="background:var(--amarelo); color:var(--azul)">Sim, excluir</button>
+      {% if voltar_url %}<a class="btn btn-contorno" href="{% url voltar_url %}">Cancelar</a>
+      {% else %}<a class="btn btn-contorno" href="{% url 'painel:'|add:voltar %}">Cancelar</a>{% endif %}
+    </form>
+  </div>
+{% endblock %}

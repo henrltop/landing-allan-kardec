@@ -1,0 +1,132 @@
+{% load static %}<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>{% block titulo %}Painel{% endblock %} · Equipe 20020</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --azul:#070FB5; --verde:#51BC24; --amarelo:#F9C023; --branco:#FFFFFF;
+    /* tons de conforto (uso interno do painel) */
+    --fundo:#EDF0FA; --borda:#C9CFEE; --divisor:#E2E5F5; --topo-tabela:#F6F7FD;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  body{
+    font-family:'Poppins', sans-serif; font-size:15px; line-height:1.6;
+    color:var(--azul); background:var(--fundo);
+  }
+  a{ color:inherit; text-decoration:none; }
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{
+    outline:3px solid var(--amarelo); outline-offset:2px;
+  }
+  .wrap{ width:min(1180px, 94vw); margin:0 auto; }
+  header{ position:sticky; top:0; z-index:50; background:var(--azul); border-bottom:1px solid var(--branco); }
+  .nav-bar{ display:flex; align-items:center; justify-content:space-between; gap:20px; min-height:66px; flex-wrap:wrap; }
+  .marca{ display:flex; align-items:center; gap:14px; }
+  .marca img{ height:44px; width:auto; }
+  .marca span{ color:var(--amarelo); font-weight:800; font-size:13px; letter-spacing:.18em; text-transform:uppercase; }
+  nav{ display:flex; gap:4px; align-items:center; flex-wrap:wrap; }
+  nav a{
+    color:var(--branco); font-size:13px; font-weight:600;
+    padding:8px 14px; border-radius:2px; transition:background-color .2s, color .2s;
+  }
+  nav a:hover{ color:var(--verde); }
+  nav a.ativo{ background:var(--branco); color:var(--azul); }
+  nav .sair{ color:var(--amarelo); }
+  main{ padding:38px 0 80px; min-height:70vh; }
+  .topo-pagina{ display:flex; align-items:end; justify-content:space-between; gap:18px; flex-wrap:wrap; margin-bottom:26px; }
+  h1{ font-size:clamp(22px, 3vw, 32px); font-weight:800; letter-spacing:-.01em; }
+  .sub{ font-size:13px; margin-top:4px; }
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center;
+    min-height:44px; padding:0 22px; border-radius:2px; border:0; cursor:pointer;
+    font-family:inherit; font-weight:600; font-size:14px;
+    background:var(--azul); color:var(--branco); transition:background-color .2s;
+  }
+  .btn:hover{ background:var(--verde); }
+  .btn-verde{ background:var(--verde); }
+  .btn-verde:hover{ background:var(--azul); }
+  .btn-contorno{ background:none; border:1px solid var(--azul); color:var(--azul); }
+  .btn-contorno:hover{ background:var(--azul); color:var(--branco); }
+  .bloco{
+    background:var(--branco); border:1px solid var(--borda);
+    border-radius:2px; padding:24px 26px;
+  }
+  table{
+    width:100%; border-collapse:collapse;
+    background:var(--branco); border:1px solid var(--borda);
+  }
+  th{
+    text-align:left; font-size:11px; font-weight:700; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--verde); padding:12px 16px;
+    border-bottom:1px solid var(--azul); background:var(--topo-tabela);
+  }
+  td{ padding:13px 16px; border-bottom:1px solid var(--divisor); vertical-align:top; font-size:14px; }
+  tr:last-child td{ border-bottom:0; }
+  td .acoes{ display:flex; gap:14px; }
+  td .acoes a{ font-weight:600; font-size:13px; border-bottom:2px solid var(--verde); padding-bottom:1px; transition:color .2s; }
+  td .acoes a:hover{ color:var(--verde); }
+  .tag{
+    display:inline-block; font-size:11px; font-weight:700; letter-spacing:.08em;
+    text-transform:uppercase; padding:3px 10px; border:1px solid var(--azul); border-radius:2px;
+  }
+  .tag-verde{ border-color:var(--verde); color:var(--verde); }
+  .tag-amarelo{ border-color:var(--amarelo); color:var(--azul); background:var(--amarelo); }
+  .vazio{ padding:36px 16px; font-size:14px; }
+  .filtros{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; }
+  .filtros a{
+    font-size:13px; font-weight:600; padding:7px 14px; background:var(--branco);
+    border:1px solid var(--borda); border-radius:2px; transition:background-color .2s, color .2s;
+  }
+  .filtros a.ativo, .filtros a:hover{ background:var(--azul); color:var(--branco); }
+  input[type=text], input[type=email], input[type=url], input[type=password],
+  input[type=datetime-local], input[type=search], select, textarea{
+    width:100%; min-height:46px; padding:10px 16px;
+    border:1px solid var(--borda); border-radius:2px;
+    font-family:inherit; font-size:14px; color:var(--azul); background:var(--branco);
+  }
+  input:focus, select:focus, textarea:focus{ border-color:var(--azul); }
+  textarea{ min-height:130px; resize:vertical; }
+  label{ font-size:11px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; display:block; margin-bottom:6px; }
+  .campo{ margin-bottom:18px; }
+  .erros{ color:var(--verde); font-weight:600; font-size:13px; margin-top:5px; }
+  .busca{ display:flex; gap:10px; margin-bottom:20px; max-width:420px; }
+  {% block css %}{% endblock %}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav-bar">
+    <a class="marca" href="{% url 'painel:inicio' %}">
+      <img src="{% static 'logo-allan-kardec.png' %}" alt="Professor Allan Kardec">
+      <span>Painel da equipe</span>
+    </a>
+    {% if user.is_authenticated %}
+    {% with rn=request.resolver_match.url_name %}
+    <nav>
+      <a href="{% url 'painel:inicio' %}" {% if rn == 'inicio' %}class="ativo"{% endif %}>Início</a>
+      <a href="{% url 'painel:liderancas' %}" {% if rn == 'liderancas' %}class="ativo"{% endif %}>Lideranças</a>
+      <a href="{% url 'painel:agenda' %}" {% if rn == 'agenda' %}class="ativo"{% endif %}>Agenda</a>
+      <a href="{% url 'painel:demandas' %}" {% if rn == 'demandas' %}class="ativo"{% endif %}>Demandas</a>
+      <a href="{% url 'painel:materias' %}" {% if rn == 'materias' or rn == 'materia' %}class="ativo"{% endif %}>Matérias</a>
+      <a href="{% url 'analytics:instagram' %}" {% if rn == 'instagram' or rn == 'midia' %}class="ativo"{% endif %}>Instagram</a>
+      <a href="{% url 'analytics:relatorios' %}" {% if 'relatorio' in rn %}class="ativo"{% endif %}>Relatórios</a>
+      <form method="post" action="{% url 'painel:sair' %}" style="display:inline">{% csrf_token %}
+        <button type="submit" class="sair" style="background:none;border:0;cursor:pointer;font:inherit;font-weight:600;font-size:13px;padding:8px 14px;color:var(--amarelo)">Sair ({{ user.username }})</button>
+      </form>
+    </nav>
+    {% endwith %}
+    {% endif %}
+  </div>
+  <div style="display:grid;grid-template-columns:25fr 15fr 20fr 40fr;height:6px" aria-hidden="true">
+    <span style="background:var(--verde)"></span><span style="background:var(--branco)"></span><span style="background:var(--amarelo)"></span><span style="background:var(--azul)"></span>
+  </div>
+</header>
+<main><div class="wrap">{% block conteudo %}{% endblock %}</div></main>
+</body>
+</html>
